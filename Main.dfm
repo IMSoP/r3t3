@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 123
   Top = 130
   BorderStyle = bsSizeToolWin
-  Caption = 'Ron'#39's Really Rubbish Time Tracking Tool'
+  Caption = 'Rowan'#39's Really Rubbish Time Tracking Tool'
   ClientHeight = 479
   ClientWidth = 520
   Color = clSkyBlue
@@ -25,70 +25,103 @@ object MainForm: TMainForm
   PixelsPerInch = 96
   TextHeight = 13
   object AddButton: TSpeedButton
-    Left = 8
-    Top = 448
-    Width = 91
+    Left = 3
+    Top = 449
+    Width = 111
     Height = 25
     Caption = 'Add Task'
     OnClick = AddButtonClick
   end
   object TasklessLabel: TLabel
-    Left = 120
-    Top = 458
-    Width = 102
-    Height = 13
-    Caption = 'Un-assigned time:'
+    Left = 170
+    Top = 453
+    Width = 58
+    Height = 16
+    Caption = 'Paused:'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
+    Font.Color = clRed
+    Font.Height = -13
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object SaveButton: TSpeedButton
-    Left = 320
-    Top = 450
-    Width = 57
+    Left = 4
+    Top = 421
+    Width = 49
     Height = 23
     Caption = 'Save...'
     OnClick = SaveButtonClick
   end
   object LoadButton: TSpeedButton
-    Left = 383
-    Top = 450
+    Left = 57
+    Top = 421
     Width = 57
     Height = 23
     Caption = 'Load...'
     OnClick = LoadButtonClick
   end
   object FilenameLabel: TLabel
-    Left = 224
-    Top = 431
-    Width = 288
+    Left = 208
+    Top = 426
+    Width = 304
     Height = 13
     AutoSize = False
     EllipsisPosition = epPathEllipsis
   end
+  object TotalLabel: TLabel
+    Left = 397
+    Top = 454
+    Width = 41
+    Height = 16
+    Caption = 'Total:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   inline TasklessTime: TEditableTime
-    Left = 224
+    Left = 234
     Top = 450
     Width = 70
     Height = 24
     TabOrder = 0
     TabStop = True
-    ExplicitLeft = 224
+    ExplicitLeft = 234
     ExplicitTop = 450
+    inherited TextEdit: TEdit
+      Color = 15658751
+    end
+    inherited TextDisplay: TPanel
+      Color = 13421823
+    end
   end
   object AutoSaveCheck: TCheckBox
-    Left = 446
-    Top = 454
-    Width = 97
+    Left = 120
+    Top = 425
+    Width = 82
     Height = 17
     Caption = 'Auto-Save'
     Checked = True
     Enabled = False
     State = cbChecked
     TabOrder = 1
+  end
+  inline TotalTime: TEditableTime
+    Left = 442
+    Top = 450
+    Width = 70
+    Height = 24
+    TabOrder = 2
+    TabStop = True
+    ExplicitLeft = 442
+    ExplicitTop = 450
+    inherited TextDisplay: TPanel
+      Cursor = crDefault
+      Color = clWhite
+    end
   end
   object TickTimer: TTimer
     OnTimer = TickTimerTimer

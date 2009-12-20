@@ -153,11 +153,11 @@ object TaskFrame: TTaskFrame
       end
       inherited TextEdit: TEdit
         Width = 330
-        ExplicitWidth = 348
+        ExplicitWidth = 330
       end
       inherited TextDisplay: TPanel
         Width = 330
-        ExplicitWidth = 348
+        ExplicitWidth = 330
       end
     end
     inline TaskTime: TEditableTime
@@ -169,9 +169,6 @@ object TaskFrame: TTaskFrame
       TabStop = True
       ExplicitLeft = 445
       ExplicitTop = 3
-      inherited TextEdit: TEdit
-        ExplicitWidth = 40
-      end
     end
   end
 end

@@ -35,7 +35,7 @@ implementation
 constructor TEditableTime.Create(Owner: TComponent);
 begin
       inherited;
-      _isBlank := false;
+      _realText := TextDisplay.Caption;
 end;
 
 procedure TEditableTime.BeginEditting;
@@ -50,6 +50,8 @@ begin
                   (_timeValue Mod 3600) div 60
             ]
       );
+
+      TextEdit.SelectAll;
 end;
 
 procedure TEditableTime.DoneEditting(AcceptText: boolean);
@@ -76,25 +78,32 @@ procedure TEditableTime.SetDisplayText(NewValue: string);
 var
       hours, minutes, seconds: Integer;
 begin
-      // If string is 4 chars, assume h:mm, add zero seconds, and proceed
-      if Length(NewValue) = 4
-      then
-            NewValue := NewValue + ':00';
+      // If the input is a single number, interpret as that many minutes
+      if TryStrToInt(NewValue, minutes)
+      then begin
+            Time := (minutes * 60);
+      end
+      else begin
+            // If string is 4 chars, assume h:mm, add zero seconds, and proceed
+            if Length(NewValue) = 4
+            then
+                  NewValue := NewValue + ':00';
 
-      // If the string isn't the right "shape", manually raise an exception
-      if    (Length(NewValue) <> 7)
-            Or (MidStr(NewValue, 2, 1) <> ':')
-            Or (MidStr(NewValue, 5, 1) <> ':')
-      then
-            Raise EConvertError.Create('Invalid time specification: '+NewValue);
+            // If the string isn't the right "shape", manually raise an exception
+            if    (Length(NewValue) <> 7)
+                  Or (MidStr(NewValue, 2, 1) <> ':')
+                  Or (MidStr(NewValue, 5, 1) <> ':')
+            then
+                  Raise EConvertError.Create('Invalid time specification: '+NewValue);
 
-      // Get (and let Delphi validate) the hours and minutes
-      hours := StrToInt( MidStr(NewValue, 1, 1) );
-      minutes := StrToInt( MidStr(NewValue, 3, 2) );
-      seconds := StrToInt( MidStr(NewValue, 6, 2) );
+            // Get (and let Delphi validate) the hours and minutes
+            hours := StrToInt( MidStr(NewValue, 1, 1) );
+            minutes := StrToInt( MidStr(NewValue, 3, 2) );
+            seconds := StrToInt( MidStr(NewValue, 6, 2) );
 
-      // Set the internal time value to the appropriate integer
-      _timeValue := (hours * 3600) + (minutes * 60) + seconds;
+            // Set the internal time value to the appropriate integer
+            _timeValue := (hours * 3600) + (minutes * 60) + seconds;
+      end;
 
       UpdateTimeDisplay;
 end;
@@ -111,7 +120,7 @@ end;
 
 procedure TEditableTime.UpdateTimeDisplay;
 begin
-       TextDisplay.Caption := Format(
+       _realText := Format(
             '%.1d:%.2d:%.2d',
             [
                   _timeValue Div 3600,
@@ -119,6 +128,7 @@ begin
                   _timeValue Mod 60
             ]
        );
+       TextDisplay.Caption := _realText;
 end;
 
 end.

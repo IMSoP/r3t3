@@ -11,6 +11,8 @@ program RRRTTT;
 {%TogetherDiagram 'ModelSupport_RRRTTT\_EditableTimeFrame\default.txaPackage'}
 {%TogetherDiagram 'ModelSupport_RRRTTT\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_RRRTTT\_ClickToEditFrame\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\_EditableTimeFrame\default.txvpck'}
+{$R 'R3T3Buttons.res' 'R3T3Buttons.rc'}
 
 uses
   Windows,
@@ -25,7 +27,6 @@ uses
   ComCtrls,
   Forms,
   Main in 'Main.pas' {MainForm},
-  Cloner in 'Cloner.pas',
   _TaskFrame in '_TaskFrame.pas' {TaskFrame: TFrame},
   _ClickToEditFrame in '_ClickToEditFrame.pas' {ClickToEdit: TFrame},
   _EditableTimeFrame in '_EditableTimeFrame.pas' {EditableTime: TFrame};
@@ -43,7 +44,7 @@ begin
         and not WS_EX_APPWINDOW or WS_EX_TOOLWINDOW);
   ShowWindow(Application.Handle, SW_SHOW);
 
-  Application.Title := 'Ron''s Really Rubbish Time Tracking Tool';
+  Application.Title := 'Rowan''s Really Rubbish Time Tracking Tool';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

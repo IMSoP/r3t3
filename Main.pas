@@ -8,14 +8,19 @@ uses _TaskFrame, _ClickToEditFrame, _EditableTimeFrame,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, ExtDlgs, StrUtils;
 
 const
-   // This is VK_OEM_5: US standard keyboard \ and | key.
-   //       according to http://safari.oreilly.com/0672319330/ch09lev1sec3
-   VK_BACKSLASH = $DC;
-   // Registered identifier that Win32 will send back to us for our global hotkey 
+   // Better names for some Virtual Keycodes;
+   //       see ms-help://borland.bds4/winui/winui/windowsuserinterface/userinput/VirtualKeyCodes.htm
+   // This is apparently the US standard keyboard \ and | key; works for me
+   VK_BACKSLASH = VK_OEM_5;
+   // No definition listed for US standard keyboard, but seems to be back-tick in UK
+   VK_BACKTICK = VK_OEM_8;
+   // Registered identifier that Win32 will send back to us for our global hotkey
    HK_SHOWHIDE = 1;
 
 type
   TMainForm = class(TForm)
+    TotalTime: TEditableTime;
+    TotalLabel: TLabel;
   private
     _hidden: boolean;
     _taskFrames: Array of TTaskFrame;
@@ -45,6 +50,8 @@ type
     procedure AddTask();
     procedure DeleteTask(TaskNum: Integer);
     procedure SetActiveTask(TaskNum: Integer);
+    procedure Pause;
+    procedure UnPause(NewTask: Integer);
     procedure OnHotKey(var Msg: TMessage); message WM_HOTKEY;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -57,6 +64,7 @@ type
     procedure SaveState(OutFileName:String);
     procedure LoadState(InFileName:String);
     procedure SetFilename(NewValue: TFileName);
+    procedure UpdateTotal;
 
     property Editting: TClickToEdit read _editting write _editting;
     property FileName: TFileName read _filename write SetFilename;
@@ -77,6 +85,9 @@ begin
          _editting := nil;
          _filename := '';
          Self.AddTask();
+         Self.Pause;
+
+         TotalTime.ReadOnly := True;
 end;
 
 // If the main form captures a mouse event, it implies any editting is aborted
@@ -142,7 +153,24 @@ begin
                   Ord('0')..Ord('9'):
                         begin
                               // Activate the task for that number, if it exists
-                              SetActiveTask(Msg.CharCode - 48);
+                              SetActiveTask(Msg.CharCode - Ord('0'));
+                              Handled := true;
+                        end;
+                  VK_NUMPAD0..VK_NUMPAD9:
+                        begin
+                              // Activate using numpad
+                              SetActiveTask(Msg.CharCode - VK_NUMPAD0);
+                              Handled := true;
+                        end;
+                  VK_BACKTICK:
+                        begin
+                              // This key happens to be to the left of '1', so treat it as '0'
+                              SetActiveTask(0);
+                              Handled := true;
+                        end;
+                  VK_OEM_PLUS:
+                        begin
+                              AddTask;
                               Handled := true;
                         end;
             end;
@@ -174,6 +202,10 @@ begin
    TempFrame.Tag := _numTasks;
 
    TempFrame.Parent := MainForm;
+
+   // If we're paused, change the glyph on the "Go" button
+   if _currentTask = -1 then
+      TempFrame.StartBtn.Glyph.LoadFromResourceName(hInstance, 'PlusGo');
 
    inc(_numTasks);
 end;
@@ -240,6 +272,8 @@ begin
       TimeText := _taskFrames[_currentTask].TaskTime;
 
    TimeText.Time := TimeText.Time + 1;
+
+   UpdateTotal;
 end;
 
 procedure TMainForm.SetActiveTask(TaskNum: Integer);
@@ -254,7 +288,8 @@ begin
       // first deactivate the old
       if _currentTask = -1 then
       begin
-            // TODO: Deal with anonymous time
+            if TaskNum <> -1 then
+                  UnPause(TaskNum);
       end
       else
       begin
@@ -266,18 +301,51 @@ begin
       // now activate the new
       if TaskNum = -1 then
       begin
-            // TODO: Deal with anonymous time
-            // This will at least stop the crash-per-second bug
-            _currentTask := -1;
+            Pause;
       end
       else
       begin
             _taskFrames[TaskNum].TaskPanel.Color := clMoneyGreen;
-            _currentTask := TaskNum;
             _taskFrames[TaskNum].StartBtn.Visible := False;
             _taskFrames[TaskNum].StopBtn.Visible := True;
       end;
+
+      _currentTask := TaskNum;
    end;
+end;
+
+procedure TMainForm.Pause;
+var
+      i: Integer;
+begin
+      TasklessTime.Visible := True;
+      TasklessLabel.Visible := True;
+
+      For i:=0 to _numTasks -1 do
+      Begin
+            _taskFrames[i].StartBtn.Glyph.LoadFromResourceName(hInstance, 'PlusGo');
+      End;
+end;
+
+procedure TMainForm.UnPause(NewTask: Integer);
+var
+      i: Integer;
+begin
+      TasklessTime.Visible := False;
+      TasklessLabel.Visible := False;
+
+      For i:=0 to _numTasks -1 do
+      Begin
+            _taskFrames[i].StartBtn.Glyph.LoadFromResourceName(hInstance, 'Go');
+      End;
+
+      // Add the "paused" time to the newly selected task
+      _taskFrames[NewTask].TaskTime.Time :=
+            _taskFrames[NewTask].TaskTime.Time
+            + TasklessTime.Time;
+
+      // Clear "paused" timer
+      TasklessTime.Time := 0;
 end;
 
 procedure TMainForm.SetFilename(NewValue: TFileName);
@@ -321,12 +389,22 @@ begin
             Begin
                   write(OutFile, IntToStr(i) + #9);
                   write(OutFile, _taskFrames[i].TaskTime.DisplayText + #9);
+                  ShowMessage(         _taskFrames[i].TaskTime.DisplayText );
                   writeln(OutFile, _taskFrames[i].TaskName.DisplayText);
             End;
-            // Write the taskless timer
-            write(OutFile, '!'#9);
-            write(OutFile, TasklessTime.DisplayText + #9);
-            writeln(OutFile, '[Unassigned Time]');
+            // Write the "paused" time
+            if TaskLessTime.Time > 0 then
+            begin
+                  write(OutFile, '!'#9);
+                  write(OutFile, TasklessTime.DisplayText + #9);
+                  writeln(OutFile, '[Paused]');
+            end;
+            // Write the total, for reference
+            UpdateTotal;
+            write(OutFile, '='#9);
+            write(OutFile, TotalTime.DisplayText + #9);
+            writeln(OutFile, 'TOTAL');
+
             Success := true;
      finally
             CloseFile(OutFile);
@@ -402,6 +480,25 @@ begin
 
       if not Success then
             ShowMessage('Could not load file.');
+
+      UpdateTotal;
+end;
+
+procedure TMainForm.UpdateTotal;
+var
+      i: Integer;
+      Total: Integer;
+begin
+      Total := 0;
+
+      For i:=0 to _numTasks -1 do
+      Begin
+            Total := Total + _taskFrames[i].TaskTime.Time;
+      End;
+      // Don't forget any "paused" time
+      Total := Total + TasklessTime.Time;
+
+      TotalTime.Time := Total;
 end;
 
 end.

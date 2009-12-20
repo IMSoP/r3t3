@@ -9,8 +9,12 @@ uses
 
 type
   TClickToEdit = class(TFrame)
+  protected
+      _realText: String;
+      _readOnly: Boolean;
+
   public
-  
+
   published
     YesButton: TSpeedButton;
     NoButton: TSpeedButton;
@@ -20,7 +24,6 @@ type
     constructor Create(Owner: TComponent); override;
 
     // Custom functions
-    function GetDisplayText(): String; virtual;
     procedure SetDisplayText(NewValue: String); virtual;
     procedure BeginEditting; virtual;
     procedure DoneEditting(AcceptText: boolean); virtual;
@@ -34,11 +37,8 @@ type
     procedure TextEditKeyPress(Sender: TObject; var Key: Char);
     procedure TextEditExit(Sender: TObject);
 
-    property DisplayText: string read GetDisplayText write SetDisplayText;
-
-  protected
-      // Track blank string as special state, so we can display hint in UI
-      _isBlank: Boolean;
+    property DisplayText: string read _realText write SetDisplayText;
+    property ReadOnly: Boolean read _readOnly write _readOnly;
   end;
 
 implementation
@@ -51,52 +51,47 @@ uses Main;
 constructor TClickToEdit.Create(Owner: TComponent);
 begin
       inherited;
-      _isBlank := true;
-end;
-
-// Accessing the current text from other controls
-function TClickToEdit.GetDisplayText(): String;
-begin
-      if _isBlank then
-            Result := ''
-      else
-            Result := TextDisplay.Caption;
+      _realText := '';
+      _readOnly := False;
 end;
 
 procedure TClickToEdit.SetDisplayText(NewValue: String);
 begin
-      if Length(NewValue) = 0
-      then begin
-            _isBlank := true;
-            TextDisplay.Caption := '[Click to edit...]';
-            TextDisplay.Font.Style := [fsItalic];
-            TextDisplay.Font.Color := $666666;
-      end
-      else begin
-            _isBlank := false;
-            TextDisplay.Caption := NewValue;
-            TextDisplay.Font.Style := [];
-            TextDisplay.Font.Color := clBlack;
-      end;
+     _realText := NewValue;
+
+     if Length(_realText) = 0
+     then begin
+           TextDisplay.Caption := '[Click to edit...]';
+           TextDisplay.Font.Style := [fsItalic];
+           TextDisplay.Font.Color := $666666;
+     end
+     else begin
+           TextDisplay.Caption := ' ' + _realText;
+           TextDisplay.Font.Style := [];
+           TextDisplay.Font.Color := clBlack;
+     end;
 end;
 
 // Main editting functions
 procedure TClickToEdit.BeginEditting;
 begin
-      // Make sure the correct text is in the edit box, and flip the display
-      TextEdit.Text := DisplayText;
-      TextDisplay.Visible := false;
-      TextEdit.Visible := true;
-      TextEdit.SetFocus;
-      TextEdit.SelectAll;
+      if not ReadOnly then
+      begin
+            // Make sure the correct text is in the edit box, and flip the display
+            TextEdit.Text := _realText;
+            TextDisplay.Visible := false;
+            TextEdit.Visible := true;
+            TextEdit.SetFocus;
+            TextEdit.SelectAll;
 
-      // Display the Yes/No buttons; order is important: they stack up from the right
-      NoButton.Visible := true;
-      YesButton.Visible := true;
+            // Display the Yes/No buttons; order is important: they stack up from the right
+            NoButton.Visible := true;
+            YesButton.Visible := true;
 
-      // Warn the main frame that we're in edit mode, and not to interfere
-      // Doing this last allows other elements to react to us taking focus first
-      MainForm.Editting := Self;
+            // Warn the main frame that we're in edit mode, and not to interfere
+            // Doing this last allows other elements to react to us taking focus first
+            MainForm.Editting := Self;
+      end;
 end;
 
 procedure TClickToEdit.DoneEditting(AcceptText: boolean);
@@ -140,12 +135,13 @@ end;
 
 procedure TClickToEdit.TextDisplayMouseEnter(Sender: TObject);
 begin
-      TextDisplay.BevelOuter := bvRaised;
+      If Not ReadOnly Then
+            TextDisplay.BevelOuter := bvRaised;
 end;
 
 procedure TClickToEdit.TextDisplayMouseLeave(Sender: TObject);
 begin
-      TextDisplay.BevelOuter := bvLowered;
+     TextDisplay.BevelOuter := bvLowered;
 end;
 
 procedure TClickToEdit.YesButtonClick(Sender: TObject);
