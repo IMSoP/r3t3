@@ -1,0 +1,33 @@
+object Form1: TForm1
+  Left = 206
+  Top = 127
+  Width = 378
+  Height = 587
+  BorderStyle = bsSizeToolWin
+  Caption = 'Ron'#39's Really Rubbish Time Tracking Tool'
+  Color = clSkyBlue
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Button1: TButton
+    Left = 176
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object TickTimer: TTimer
+    Left = 8
+    Top = 520
+  end
+end

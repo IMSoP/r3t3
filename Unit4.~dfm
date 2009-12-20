@@ -1,0 +1,31 @@
+object TaskFrame: TTaskFrame
+  Left = 0
+  Top = 0
+  Width = 452
+  Height = 43
+  AutoSize = True
+  TabOrder = 0
+  DesignSize = (
+    452
+    43)
+  object TaskPanel: TPanel
+    Left = 0
+    Top = 0
+    Width = 452
+    Height = 43
+    Anchors = [akLeft, akTop, akRight]
+    BevelInner = bvLowered
+    BevelOuter = bvLowered
+    Color = clSkyBlue
+    Constraints.MaxHeight = 50
+    Constraints.MaxWidth = 5000
+    TabOrder = 0
+    object TaskText: TEdit
+      Left = 50
+      Top = 10
+      Width = 343
+      Height = 21
+      TabOrder = 0
+    end
+  end
+end

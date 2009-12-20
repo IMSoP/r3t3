@@ -1,0 +1,106 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls;
+
+const
+   HK_SHOWHIDE = 1;
+
+type
+  TForm1 = class(TForm)
+    TickTimer: TTimer;
+    Button1: TButton;
+    procedure RegisterHotKeys();
+    procedure ToggleVisible();
+    procedure OnHotKey(var Msg: TMessage); message WM_HOTKEY;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    _hidden: boolean;
+    _numTasks: integer;
+end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses Unit2, Unit4;
+
+{$R *.dfm}
+
+procedure TForm1.RegisterHotKeys();
+var
+   modifier, key: integer;
+   result: boolean;
+begin
+   modifier := MOD_WIN;
+   key := Ord('Q');
+   result := RegisterHotKey(Self.Handle, HK_SHOWHIDE, modifier, key);
+end;
+
+procedure TForm1.ToggleVisible();
+begin
+    if (_hidden) then begin
+        Self.WindowState := wsNormal;
+        Self.Visible := true;
+        ShowWindow(Handle, SW_RESTORE);
+        _hidden := false;
+        SetForegroundWindow(Self.Handle);
+    end
+    else begin
+        // minimize our app
+        _hidden := true;
+        //self.WindowState := wsMinimized;
+        ShowWindow(Handle, SW_HIDE);
+        //PostMessage(Self.handle, WM_SYSCOMMAND, SC_MINIMIZE , 0);
+    end;
+end;
+
+procedure TForm1.OnHotKey(var Msg: TMessage);
+var
+   hotID: integer;
+begin
+   hotID := Msg.WParam;
+   case hotID of
+      HK_SHOWHIDE:
+         Self.toggleVisible();
+   end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+         Self.RegisterHotKeys();
+         _numTasks := 0;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   Self.toggleVisible();
+   Action := caNone;
+end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+   TempFrame: TTaskFrame;
+begin
+   inc(_numTasks);
+
+   TempFrame := TTaskFrame.Create(Form1);
+
+   TempFrame.Name := 'TaskFrame' + IntToStr(_numTasks);
+   TempFrame.Top := _numTasks * TempFrame.Height;
+
+   TempFrame.Parent := Form1;
+end;
+
+
+end.
+
