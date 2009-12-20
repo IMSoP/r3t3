@@ -16,7 +16,7 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -62,11 +62,12 @@ object MainForm: TMainForm
     OnClick = LoadButtonClick
   end
   object FilenameLabel: TLabel
-    Left = 312
+    Left = 224
     Top = 431
-    Width = 200
+    Width = 288
     Height = 13
     AutoSize = False
+    EllipsisPosition = epPathEllipsis
   end
   inline TasklessTime: TEditableTime
     Left = 224

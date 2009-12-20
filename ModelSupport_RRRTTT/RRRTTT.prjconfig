@@ -1,4 +1,2 @@
 <?xml version="1.0"?>
-<TgConfig Version="3" SubLevelDisabled="False">
-  <Option Name="namespaceFolder._ClickToEditFrame" Type="System.String" Value="" IsBrowsable="False" />
-</TgConfig>
+<TgConfig Version="3" SubLevelDisabled="False" />
