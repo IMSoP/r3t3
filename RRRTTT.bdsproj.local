@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2008/04/18 23:21:56.125.bdsproj,Y:\zrun\RRRTTT\0.2\Project2.bdsproj=Y:\zrun\RRRTTT\0.2\RRRTTT.bdsproj</Transaction>
+    <Transaction>2008/04/18 23:24:09.390.pas,Y:\zrun\RRRTTT\0.2\Unit3.pas=</Transaction>
+    <Transaction>2008/04/18 23:24:09.390.dfm,Y:\zrun\RRRTTT\0.2\Unit3.dfm=</Transaction>
+    <Transaction>2008/04/18 23:24:18.312.pas,Y:\zrun\RRRTTT\0.2\Unit1.pas=Y:\zrun\RRRTTT\0.2\MainForm.pas</Transaction>
+    <Transaction>2008/04/18 23:24:18.312.dfm,Y:\zrun\RRRTTT\0.2\Unit1.dfm=Y:\zrun\RRRTTT\0.2\MainForm.dfm</Transaction>
+    <Transaction>2008/04/18 23:24:43.109.pas,Y:\zrun\RRRTTT\0.2\Unit4.pas=Y:\zrun\RRRTTT\0.2\DummyFrame.pas</Transaction>
+    <Transaction>2008/04/18 23:24:43.109.dfm,Y:\zrun\RRRTTT\0.2\Unit4.dfm=Y:\zrun\RRRTTT\0.2\DummyFrame.dfm</Transaction>
+    <Transaction>2008/04/18 23:25:56.390.pas,Y:\zrun\RRRTTT\0.2\DummyFrame.pas=Y:\zrun\RRRTTT\0.2\TTaskFrame.pas</Transaction>
+    <Transaction>2008/04/18 23:25:56.390.dfm,Y:\zrun\RRRTTT\0.2\DummyFrame.dfm=Y:\zrun\RRRTTT\0.2\TTaskFrame.dfm</Transaction>
+    <Transaction>2008/04/18 23:27:07.828.pas,Y:\zrun\RRRTTT\0.2\TTaskFrame.pas=Y:\zrun\RRRTTT\0.2\_TaskFrame.pas</Transaction>
+    <Transaction>2008/04/18 23:27:07.828.dfm,Y:\zrun\RRRTTT\0.2\TTaskFrame.dfm=Y:\zrun\RRRTTT\0.2\_TaskFrame.dfm</Transaction>
+    <Transaction>2008/04/18 23:27:54.656.pas,Y:\zrun\RRRTTT\0.2\MainForm.pas=Y:\zrun\RRRTTT\0.2\Main.pas</Transaction>
+    <Transaction>2008/04/18 23:27:54.656.dfm,Y:\zrun\RRRTTT\0.2\MainForm.dfm=Y:\zrun\RRRTTT\0.2\Main.dfm</Transaction>
+    <Transaction>2008/04/18 23:28:09.515.pas,Y:\zrun\RRRTTT\0.2\Unit2.pas=Y:\zrun\RRRTTT\0.2\_FakeForm.pas</Transaction>
+    <Transaction>2008/04/18 23:28:09.515.dfm,Y:\zrun\RRRTTT\0.2\Unit2.dfm=Y:\zrun\RRRTTT\0.2\_FakeForm.dfm</Transaction>
+    <Transaction>2008/04/19 22:27:08.468.pas,Y:\zrun\RRRTTT\0.2\_FakeForm.pas=</Transaction>
+    <Transaction>2008/04/19 22:27:08.468.dfm,Y:\zrun\RRRTTT\0.2\_FakeForm.dfm=</Transaction>
+    <Transaction>2008/04/19 23:55:32.562.pas,Y:\zrun\RRRTTT\0.2\Unit1.pas=Y:\zrun\RRRTTT\0.2\_ClickToEditFrame.pas</Transaction>
+    <Transaction>2008/04/19 23:55:32.562.dfm,Y:\zrun\RRRTTT\0.2\Unit1.dfm=Y:\zrun\RRRTTT\0.2\_ClickToEditFrame.dfm</Transaction>
+    <Transaction>2008/04/20 02:04:27.250.pas,Y:\zrun\RRRTTT\0.2\Unit1.pas=Y:\zrun\RRRTTT\0.2\_EditableTimeFrame.pas</Transaction>
+    <Transaction>2008/04/20 02:04:27.250.dfm,Y:\zrun\RRRTTT\0.2\Unit1.dfm=Y:\zrun\RRRTTT\0.2\_EditableTimeFrame.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

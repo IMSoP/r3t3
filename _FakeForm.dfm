@@ -1,9 +1,9 @@
 object FakeForm: TFakeForm
   Left = 602
   Top = 136
-  Width = 486
-  Height = 77
   Caption = 'FakeForm'
+  ClientHeight = 43
+  ClientWidth = 478
   Color = clBtnFace
   Enabled = False
   Font.Charset = DEFAULT_CHARSET
