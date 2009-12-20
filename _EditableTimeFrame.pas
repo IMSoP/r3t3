@@ -6,7 +6,7 @@ uses
       _ClickToEditFrame,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, Buttons, StrUtils;
+  Dialogs, ExtCtrls, StdCtrls, Buttons, StrUtils, Math;
 
 type
   TEditableTime = class(TClickToEdit)
@@ -39,15 +39,22 @@ begin
 end;
 
 procedure TEditableTime.BeginEditting;
+var
+      TotalMinutes: Integer;
 begin
       // Do all the default behaviour first; it's easier that way
       inherited;
+
+      // If more than 30 seconds over the minute, round up
+      TotalMinutes := _timeValue Div 60
+             + IfThen( (_timeValue Mod 60 >= 30), 1, 0 );
+
       // Now, though, trim the text down to just hours:minutes
       TextEdit.Text := Format(
             '%.1d:%.2d',
             [
-                  _timeValue Div 3600,
-                  (_timeValue Mod 3600) div 60
+                  TotalMinutes Div 60,
+                  TotalMinutes Mod 60
             ]
       );
 

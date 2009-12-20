@@ -168,7 +168,7 @@ begin
                               SetActiveTask(0);
                               Handled := true;
                         end;
-                  VK_OEM_PLUS:
+                  VK_OEM_PLUS, VK_ADD:
                         begin
                               AddTask;
                               Handled := true;
@@ -389,7 +389,6 @@ begin
             Begin
                   write(OutFile, IntToStr(i) + #9);
                   write(OutFile, _taskFrames[i].TaskTime.DisplayText + #9);
-                  ShowMessage(         _taskFrames[i].TaskTime.DisplayText );
                   writeln(OutFile, _taskFrames[i].TaskName.DisplayText);
             End;
             // Write the "paused" time

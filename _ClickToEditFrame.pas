@@ -66,7 +66,8 @@ begin
            TextDisplay.Font.Color := $666666;
      end
      else begin
-           TextDisplay.Caption := ' ' + _realText;
+            // "&" does that magic hotkey / underlining thing; the escape seems to be "&&" 
+           TextDisplay.Caption := ' ' + StringReplace(_realText, '&', '&&', [rfReplaceAll]);
            TextDisplay.Font.Style := [];
            TextDisplay.Font.Color := clBlack;
      end;
