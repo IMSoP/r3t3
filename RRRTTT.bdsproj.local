@@ -23,5 +23,14 @@
     <Transaction>2008/04/20 02:04:27.250.pas,Y:\zrun\RRRTTT\0.2\Unit1.pas=Y:\zrun\RRRTTT\0.2\_EditableTimeFrame.pas</Transaction>
     <Transaction>2008/04/20 02:04:27.250.dfm,Y:\zrun\RRRTTT\0.2\Unit1.dfm=Y:\zrun\RRRTTT\0.2\_EditableTimeFrame.dfm</Transaction>
     <Transaction>2008/06/02 00:10:09.171.resx,Y:\zrun\RRRTTT\0.3\Buttons.resx=</Transaction>
+    <Transaction>2008/12/13 19:28:37.390.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigManager.pas</Transaction>
+    <Transaction>2009/01/25 13:57:45.312.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigState.pas</Transaction>
+    <Transaction>2009/02/06 18:41:36.234.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigHandlerINIFile.pas</Transaction>
+    <Transaction>2009/02/06 20:11:21.078.txaPackage,Y:\zrun\RRRTTT\0.4\ModelSupport_RRRTTT\ConfigDialog\default.txaPackage=</Transaction>
+    <Transaction>2009/02/06 20:12:47.578.PAS,c:\program files\borland\bds\4.0\ObjRepos\DelphiWin32\OKCANCL2.PAS=Y:\zrun\RRRTTT\0.4\OKCANCL2.PAS</Transaction>
+    <Transaction>2009/02/06 20:12:47.578.dfm,c:\program files\borland\bds\4.0\ObjRepos\DelphiWin32\OKCANCL2.dfm=Y:\zrun\RRRTTT\0.4\OKCANCL2.dfm</Transaction>
+    <Transaction>2009/02/06 20:15:34.421.pas,Y:\zrun\RRRTTT\0.4\OKCANCL2.pas=Y:\zrun\RRRTTT\0.4\UConfigDialog.pas</Transaction>
+    <Transaction>2009/02/06 20:15:34.421.dfm,Y:\zrun\RRRTTT\0.4\OKCANCL2.dfm=Y:\zrun\RRRTTT\0.4\UConfigDialog.dfm</Transaction>
+    <Transaction>2009/02/09 21:01:33.765.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigHandlerRuntime.pas</Transaction>
   </Transactions>
 </BorlandProject>

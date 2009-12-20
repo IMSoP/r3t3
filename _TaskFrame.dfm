@@ -1,31 +1,36 @@
 object TaskFrame: TTaskFrame
   Left = 0
   Top = 0
-  Width = 520
+  Width = 484
   Height = 33
-  AutoSize = True
+  Anchors = [akLeft, akTop, akRight]
+  Constraints.MaxHeight = 33
+  Constraints.MinHeight = 33
   TabOrder = 0
   TabStop = True
-  DesignSize = (
-    520
-    33)
   object TaskPanel: TPanel
     Left = 0
     Top = 0
-    Width = 520
+    Width = 484
     Height = 33
-    Anchors = [akLeft, akTop, akRight]
+    Align = alClient
     BevelInner = bvLowered
     BevelOuter = bvNone
     Color = clSkyBlue
-    Constraints.MaxHeight = 50
-    Constraints.MaxWidth = 5000
+    Constraints.MaxHeight = 33
+    Constraints.MinHeight = 33
     TabOrder = 0
+    ExplicitWidth = 529
+    ExplicitHeight = 50
+    DesignSize = (
+      484
+      33)
     object DeleteButton: TSpeedButton
       Left = 18
       Top = 5
       Width = 23
       Height = 22
+      Anchors = [akLeft, akTop, akBottom]
       Flat = True
       Glyph.Data = {
         F6020000424DF60200000000000036000000280000000E000000100000000100
@@ -59,6 +64,7 @@ object TaskFrame: TTaskFrame
       Top = 6
       Width = 11
       Height = 20
+      Anchors = [akLeft, akTop, akBottom]
       Caption = '0'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -68,10 +74,11 @@ object TaskFrame: TTaskFrame
       ParentFont = False
     end
     object StopBtn: TSpeedButton
-      Left = 416
+      Left = 375
       Top = 5
       Width = 23
       Height = 22
+      Anchors = [akTop, akRight, akBottom]
       Flat = True
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -102,12 +109,14 @@ object TaskFrame: TTaskFrame
         C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0}
       Visible = False
       OnClick = StopBtnClick
+      ExplicitLeft = 416
     end
     object StartBtn: TSpeedButton
-      Left = 416
+      Left = 375
       Top = 5
       Width = 23
       Height = 22
+      Anchors = [akTop, akRight, akBottom]
       Flat = True
       Glyph.Data = {
         9A020000424D9A0200000000000036000000280000000C000000110000000100
@@ -132,39 +141,42 @@ object TaskFrame: TTaskFrame
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       OnClick = StartBtnClick
+      ExplicitLeft = 416
     end
     inline TaskName: TClickToEdit
       Left = 47
       Top = 4
-      Width = 362
+      Width = 321
       Height = 24
+      Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
       TabStop = True
       ExplicitLeft = 47
       ExplicitTop = 4
       ExplicitWidth = 362
       inherited YesButton: TSpeedButton
-        Left = 347
+        Left = 306
         ExplicitLeft = 345
       end
       inherited NoButton: TSpeedButton
-        Left = 331
+        Left = 290
         ExplicitLeft = 362
       end
       inherited TextEdit: TEdit
-        Width = 330
+        Width = 289
         ExplicitWidth = 330
       end
       inherited TextDisplay: TPanel
-        Width = 330
+        Width = 289
         ExplicitWidth = 330
       end
     end
     inline TaskTime: TEditableTime
-      Left = 445
+      Left = 404
       Top = 3
       Width = 70
       Height = 24
+      Anchors = [akTop, akRight, akBottom]
       TabOrder = 1
       TabStop = True
       ExplicitLeft = 445

@@ -3,7 +3,7 @@ unit _EditableTimeFrame;
 interface
 
 uses
-      _ClickToEditFrame,
+      _ClickToEditFrame, PCRE,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, Buttons, StrUtils, Math;
@@ -67,11 +67,6 @@ begin
       TextEdit.Font.Color := clBlack;
       // Use exception handler to catch invalid input
       try
-            if AcceptText then
-            begin
-
-            end;
-
             // Call parent: will attempt to set DisplayText property, and then toggle display
             inherited;
       except
@@ -83,34 +78,111 @@ end;
 
 procedure TEditableTime.SetDisplayText(NewValue: string);
 var
-      hours, minutes, seconds: Integer;
+      Regex: IRegex;
+      Match: IMatch;
+      hours, minutes, seconds, fraction: Integer;
+      Done: boolean;
 begin
+      Done := false;
+
       // If the input is a single number, interpret as that many minutes
-      if TryStrToInt(NewValue, minutes)
-      then begin
-            Time := (minutes * 60);
-      end
-      else begin
-            // If string is 4 chars, assume h:mm, add zero seconds, and proceed
-            if Length(NewValue) = 4
-            then
-                  NewValue := NewValue + ':00';
+      Regex := RegexCreate('^\d+$');
+      Match := Regex.Match(NewValue);
+      If ( Match.Success )
+      Then Begin
+            Time := ( StrToInt(NewValue) * 60 );
+            Done := true;
+      End;
 
-            // If the string isn't the right "shape", manually raise an exception
-            if    (Length(NewValue) <> 7)
-                  Or (MidStr(NewValue, 2, 1) <> ':')
-                  Or (MidStr(NewValue, 5, 1) <> ':')
-            then
-                  Raise EConvertError.Create('Invalid time specification: '+NewValue);
+      // hh:mm, both sides optional
+      If Not Done
+      Then Begin
+            // Not sure if this leaks memory - there doesn't seem to be a destructor?
+            Regex := RegexCreate('^(\d*):(\d{0,2})$');
+            Match := Regex.Match(NewValue);
+            If ( Match.Success )
+            Then Begin
+                  If Match.Groups[1].Length = 0
+                        Then Hours := 0
+                        Else Hours := StrToInt(Match.Groups[1].Value);
+                  If Match.Groups[2].Length = 0
+                        Then Minutes := 0
+                        Else Minutes := StrToInt(Match.Groups[2].Value);
 
-            // Get (and let Delphi validate) the hours and minutes
-            hours := StrToInt( MidStr(NewValue, 1, 1) );
-            minutes := StrToInt( MidStr(NewValue, 3, 2) );
-            seconds := StrToInt( MidStr(NewValue, 6, 2) );
+                  // Over 59 minutes? Error!
+                  If Minutes > 59
+                        Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
 
-            // Set the internal time value to the appropriate integer
-            _timeValue := (hours * 3600) + (minutes * 60) + seconds;
-      end;
+                  Time := (hours * 3600) + (minutes * 60);
+
+                  Done := true;
+            End;
+      End;
+
+      // hh:mm:ss; must have at least something in minutes section
+      If Not Done
+      Then Begin
+            // Not sure if this leaks memory - there doesn't seem to be a destructor?
+            Regex := RegexCreate('^(\d*):(\d{1,2}):(\d*)$');
+            Match := Regex.Match(NewValue);
+            If ( Match.Success )
+            Then Begin
+                  If Match.Groups[1].Length = 0
+                        Then Hours := 0
+                        Else Hours := StrToInt(Match.Groups[1].Value);
+                  If Match.Groups[2].Length = 0
+                        Then Minutes := 0
+                        Else Minutes := StrToInt(Match.Groups[2].Value);
+                  If Match.Groups[3].Length = 0
+                        Then Seconds := 0
+                        Else Seconds := StrToInt(Match.Groups[3].Value);
+
+                  // Over 59 minutes? Error!
+                  If Minutes > 59
+                        Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
+                  // Ditto seconds
+                  If Seconds > 59
+                        Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
+
+                  Time := (hours * 3600) + (minutes * 60) + seconds;
+
+                  Done := true;
+            End;
+      End;
+
+      // hh.fraction; e.g. "1.5", ".5", and (why not?) "1."
+      If Not Done
+      Then Begin
+            // Not sure if this leaks memory - there doesn't seem to be a destructor?
+            Regex := RegexCreate('^(\d*).(\d*)$');
+            Match := Regex.Match(NewValue);
+            If ( Match.Success )
+            Then Begin
+                  // Just "." is considered an error
+                  If ( Match.Groups[1].Length = 0 ) And ( Match.Groups[2].Length = 0 )
+                        Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
+
+                  If Match.Groups[1].Length = 0
+                        Then Hours := 0
+                        Else Hours := StrToInt(Match.Groups[1].Value);
+
+                  If Match.Groups[2].Length = 0
+                  Then Begin
+                        Time := (Hours * 3600);
+                  End Else Begin
+                        Fraction := StrToInt(Match.Groups[2].Value);
+                        // Ooh, I'd never really thought how complicated this is
+                        Time := (Hours * 3600)
+                               + Round( Fraction * 3600 / IntPower(10, Match.Groups[2].Length) );
+                  End;
+
+                  Done := true;
+            End;
+      End;
+
+      // If everything fails, raise hell (or an error)
+      If Not Done
+            Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
 
       UpdateTimeDisplay;
 end;

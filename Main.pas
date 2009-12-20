@@ -2,7 +2,9 @@ unit Main;
 
 interface
 
-uses _TaskFrame, _ClickToEditFrame, _EditableTimeFrame,
+uses
+  _TaskFrame, _ClickToEditFrame, _EditableTimeFrame,
+  ConfigManager, ConfigState, ConfigHandlerINIFile, ConfigHandlerRuntime, UConfigDialog,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, ExtDlgs, StrUtils;
@@ -19,9 +21,14 @@ const
 
 type
   TMainForm = class(TForm)
-    TotalTime: TEditableTime;
-    TotalLabel: TLabel;
+    FooterPanel: TPanel;
+    HeaderPanel: TPanel;
+    SettingsButton: TSpeedButton;
+    procedure SettingsButtonClick(Sender: TObject);
+    // procedure Button1Click(Sender: TObject);
+
   private
+    FConfigManager: TConfigManager;
     _hidden: boolean;
     _taskFrames: Array of TTaskFrame;
     _numTasks: integer;
@@ -42,6 +49,9 @@ type
     AutoSaveTimer: TTimer;
     AutoSaveCheck: TCheckBox;
     FilenameLabel: TLabel;
+    TotalTime: TEditableTime;
+    TotalLabel: TLabel;
+
     procedure SaveButtonClick(Sender: TObject);
     procedure LoadButtonClick(Sender: TObject);
     procedure AutoSaveTimerTimer(Sender: TObject);
@@ -50,6 +60,7 @@ type
     procedure AddTask();
     procedure DeleteTask(TaskNum: Integer);
     procedure SetActiveTask(TaskNum: Integer);
+    procedure CalculateHeight;
     procedure Pause;
     procedure UnPause(NewTask: Integer);
     procedure OnHotKey(var Msg: TMessage); message WM_HOTKEY;
@@ -77,6 +88,45 @@ implementation
 
 {$R *.dfm}
 
+(*
+procedure TMainForm.Button1Click(Sender: TObject);
+var
+      FinalString: String;
+      MaskStart, MaskEnd: Integer;
+      MaskString, DateString: String;
+
+      WorkingState: TConfigState;
+begin
+     FinalString := Edit1.Text;
+
+     repeat
+            MaskStart := Pos('{', FinalString);
+            MaskEnd := PosEx('}', FinalString, MaskStart);
+
+            // Detect when we've run out of {...} pairs
+            if ( (MaskStart = 0) Or (MaskEnd = 0) ) then
+            begin
+                  break;
+            end;
+
+            MaskString := MidStr(FinalString, MaskStart + 1, MaskEnd - MaskStart - 1);
+
+            DateTimeToString(DateString, MaskString, Now());
+
+            FinalString := ReplaceStr(FinalString, '{' + MaskString + '}', DateString);
+      until False;
+
+      WorkingState := TConfigState.Clone(FConfigManager.CurrentState);
+      
+      WorkingState['foo','bar'] := FinalString;
+      FConfigManager.CurrentState := WorkingState;
+      WorkingState.Free;
+
+      ShowMessage(FConfigManager.CurrentState['foo','bar']);
+end;
+*)
+
+
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
          Self.RegisterHotKeys();
@@ -87,7 +137,14 @@ begin
          Self.AddTask();
          Self.Pause;
 
+         // Can't set this at design time (or don't know how)
          TotalTime.ReadOnly := True;
+
+         FConfigManager := TConfigManager.Create;
+         // Takes the TConfigManager in constructor, and subscribes to it
+         TConfigHandlerINIFile.Create(FConfigManager);
+         // Horribly inconsistently, this one takes the *form* in the constructor
+         FConfigManager.AttachObserver(TConfigHandlerRuntime.Create(Self));
 end;
 
 // If the main form captures a mouse event, it implies any editting is aborted
@@ -193,7 +250,8 @@ begin
    TempFrame := TTaskFrame.Create(MainForm);
 
    TempFrame.Name := 'TaskFrame' + IntToStr(_numTasks);
-   TempFrame.Top := _numTasks * TempFrame.Height;
+   TempFrame.Top := HeaderPanel.Height + (_numTasks * TempFrame.Height);
+   TempFrame.Width := MainForm.ClientWidth;
 
    TempFrame.KeyLabel.Caption := IntToStr(_numTasks);
 
@@ -203,11 +261,13 @@ begin
 
    TempFrame.Parent := MainForm;
 
+   inc(_numTasks);
+
+   CalculateHeight;
+
    // If we're paused, change the glyph on the "Go" button
    if _currentTask = -1 then
       TempFrame.StartBtn.Glyph.LoadFromResourceName(hInstance, 'PlusGo');
-
-   inc(_numTasks);
 end;
 
 procedure TMainForm.DeleteTask(TaskNum: Integer);
@@ -234,7 +294,7 @@ begin
       _taskFrames[i].Tag := i;
       _taskFrames[i].Name := 'TaskFrame' + IntToStr(i);
       _taskFrames[i].KeyLabel.Caption := IntToStr(i);
-      _taskFrames[i].Top := i * _taskFrames[i].Height;
+      _taskFrames[i].Top := HeaderPanel.Height + (i * _taskFrames[i].Height);
    end;
 
    Dec(_numTasks);
@@ -243,6 +303,8 @@ begin
    // if we've just rearranged the active task, it will have a new ID
    if _currentTask > TaskNum
       then dec(_currentTask);
+
+   CalculateHeight;
 
    // normal operation may now resume
    TickTimer.Enabled := True;
@@ -253,6 +315,23 @@ begin
       if (Filename <> '') And (AutoSaveCheck.Checked)
       then
             SaveState(Filename);
+end;
+
+procedure TMainForm.CalculateHeight;
+var
+      NewHeight: Integer;
+begin
+      NewHeight := HeaderPanel.Height + FooterPanel.Height;
+      // All task panels should be same height, but we need 1 to read the height from
+      If _numTasks > 0
+            Then NewHeight := NewHeight + (_numTasks * _taskFrames[0].Height);
+
+      // Relax constraints, set the *client* height, then restore constraints
+      Constraints.MaxHeight := 0;
+      Constraints.MinHeight := 0;
+      ClientHeight := NewHeight;
+      Constraints.MaxHeight := Self.Height;
+      Constraints.MinHeight := Self.Height;
 end;
 
 procedure TMainForm.AddButtonClick(Sender: TObject);
@@ -354,8 +433,16 @@ begin
       FilenameLabel.Caption := NewValue;
 end;
 
+procedure TMainForm.SettingsButtonClick(Sender: TObject);
+begin
+      // Give auto-created ConfigDialog a reference to the ConfigManager
+      ConfigDialog.ShowModal(FConfigManager);
+end;
+
 procedure TMainForm.SaveButtonClick(Sender: TObject);
 begin
+      SaveDialog1.FileName := FileName;
+
       If SaveDialog1.Execute
       Then Begin
            SaveState(SaveDialog1.FileName);
@@ -366,6 +453,8 @@ end;
 
 procedure TMainForm.LoadButtonClick(Sender: TObject);
 begin
+      OpenDialog1.FileName := FileName;
+
       If OpenDialog1.Execute
       Then Begin
            LoadState(OpenDialog1.FileName);

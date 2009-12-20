@@ -13,6 +13,15 @@ program RRRTTT;
 {%TogetherDiagram 'ModelSupport_RRRTTT\_ClickToEditFrame\default.txvpck'}
 {%TogetherDiagram 'ModelSupport_RRRTTT\_EditableTimeFrame\default.txvpck'}
 {$R 'R3T3Buttons.res' 'R3T3Buttons.rc'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigManager\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigHandlerINIFile\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigState\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\UConfigDialog\default.txaPackage'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\_TaskFrame\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigManager\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigHandlerINIFile\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\ConfigState\default.txvpck'}
+{%TogetherDiagram 'ModelSupport_RRRTTT\UConfigDialog\default.txvpck'}
 
 uses
   Windows,
@@ -29,7 +38,14 @@ uses
   Main in 'Main.pas' {MainForm},
   _TaskFrame in '_TaskFrame.pas' {TaskFrame: TFrame},
   _ClickToEditFrame in '_ClickToEditFrame.pas' {ClickToEdit: TFrame},
-  _EditableTimeFrame in '_EditableTimeFrame.pas' {EditableTime: TFrame};
+  _EditableTimeFrame in '_EditableTimeFrame.pas' {EditableTime: TFrame},
+  ConfigManager in 'ConfigManager.pas',
+  ConfigState in 'ConfigState.pas',
+  ConfigHandlerINIFile in 'ConfigHandlerINIFile.pas',
+  UConfigDialog in 'UConfigDialog.pas' {ConfigDialog},
+  PCRE in 'PCRE\PCRE.pas',
+  pcre_dll in 'PCRE\pcre_dll.pas',
+  ConfigHandlerRuntime in 'ConfigHandlerRuntime.pas';
 
 {$R *.res}
 
@@ -46,5 +62,6 @@ begin
 
   Application.Title := 'Rowan''s Really Rubbish Time Tracking Tool';
   Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TConfigDialog, ConfigDialog);
   Application.Run;
 end.
