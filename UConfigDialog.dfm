@@ -9,7 +9,7 @@ object ConfigDialog: TConfigDialog
   ParentFont = True
   OldCreateOrder = True
   PopupMode = pmAuto
-  Position = poDesigned
+  Position = poMainFormCenter
   DesignSize = (
     367
     183)
@@ -26,7 +26,6 @@ object ConfigDialog: TConfigDialog
     ModalResult = 1
     TabOrder = 0
     OnClick = OKBtnClick
-    ExplicitTop = 180
   end
   object CancelBtn: TButton
     Left = 207
@@ -39,7 +38,6 @@ object ConfigDialog: TConfigDialog
     ModalResult = 2
     TabOrder = 1
     OnClick = CancelBtnClick
-    ExplicitTop = 180
   end
   object AutoSaveGroup: TGroupBox
     Left = 1
@@ -77,15 +75,17 @@ object ConfigDialog: TConfigDialog
     object ASCurrentFileDisplay: TLabel
       Left = 7
       Top = 92
-      Width = 89
+      Width = 346
       Height = 13
+      AutoSize = False
       Caption = 'Current Filename: '
+      EllipsisPosition = epPathEllipsis
       Visible = False
     end
     object ASHelpText: TLabel
       Left = 7
       Top = 111
-      Width = 346
+      Width = 339
       Height = 26
       Caption = 
         'Text in braces {} will be substituted for the current date using' +

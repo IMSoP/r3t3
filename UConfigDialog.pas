@@ -50,24 +50,16 @@ implementation
 {$R *.dfm}
 
 procedure TConfigDialog.ASDirectoryBrowseButtonClick(Sender: TObject);
-var
-      Regex: IRegex;
-      Match: IMatch;
 begin
       ASDirectoryDialog.InitialDir := FASDirectoryName;
       ASDirectoryDialog.FileName := FASFileMask;
 
       If ASDirectoryDialog.Execute
       Then Begin
-            Regex := RegexCreate('^(.*\\)([^\\]*)$');
-            Match := Regex.Match(ASDirectoryDialog.FileName);
-            If ( Match.Success )
-            Then Begin
-                  FASDirectoryName := Match.Groups[1].Value;
-                  FASFileMask := Match.Groups[2].Value;
+            FASDirectoryName := ExtractFileDir(ASDirectoryDialog.FileName);
+            FASFileMask := ExtractFileName(ASDirectoryDialog.FileName);
 
-                  UpdateASFileMaskDisplay;
-            End;
+            UpdateASFileMaskDisplay;
       End;
 end;
 
@@ -154,7 +146,7 @@ begin
 
       ASCurrentFileDisplay.Caption :=
             'Current Filename: '
-            + TConfigManager.ApplyDateMask(FASDirectoryName + FASFileMask);
+            + TConfigManager.ApplyDateMask(FASDirectoryName + '\' + FASFileMask);
 
       ASCurrentFileDisplay.Visible := True;
 end;

@@ -198,39 +198,84 @@ begin
 end;
 
 procedure TMainForm.FormShortCut(var Msg: TWMKey; var Handled: Boolean);
+      // Nested procedure to handle task numbers with various shift states
+      procedure PerformTaskAction(TaskNum: Integer; ShiftState: TShiftState);
+      begin
+            If ssAlt in ShiftState
+            Then Begin
+                  // Alt-task to edit text
+                  If ( _numTasks > TaskNum )
+                        Then _taskFrames[TaskNum].TaskName.BeginEditting;
+            End
+            Else If ssShift in ShiftState
+            Then Begin
+                  // Shift-task to edit time
+                  If ( _numTasks > TaskNum )
+                        Then _taskFrames[TaskNum].TaskTime.BeginEditting;
+            End
+            Else Begin
+                  SetActiveTask(TaskNum);
+            End;
+      end;
+var
+      ShiftState: TShiftState;
 begin
-      if _editting = nil then
-            case Msg.CharCode of
-                  VK_BACKSLASH:
-                        begin
-                              // Backslash is the "pause" button
-                              SetActiveTask(-1);
-                              Handled := true;
-                        end;
-                  Ord('0')..Ord('9'):
-                        begin
-                              // Activate the task for that number, if it exists
-                              SetActiveTask(Msg.CharCode - Ord('0'));
-                              Handled := true;
-                        end;
-                  VK_NUMPAD0..VK_NUMPAD9:
-                        begin
-                              // Activate using numpad
-                              SetActiveTask(Msg.CharCode - VK_NUMPAD0);
-                              Handled := true;
-                        end;
-                  VK_BACKTICK:
-                        begin
-                              // This key happens to be to the left of '1', so treat it as '0'
-                              SetActiveTask(0);
-                              Handled := true;
-                        end;
-                  VK_OEM_PLUS, VK_ADD:
-                        begin
-                              AddTask;
-                              Handled := true;
-                        end;
-            end;
+      If _editting = nil
+      Then Begin
+            ShiftState := KeyDataToShiftState(Msg.KeyData);
+
+            If ssCtrl in ShiftState
+            Then Begin
+                  // Ctrl-shortcuts are reserved
+            End Else Begin
+                  case Msg.CharCode of
+                        VK_BACKSLASH:
+                              begin
+                                    // Backslash is the "pause" button
+                                    SetActiveTask(-1);
+
+                                    // Shift-backslash to edit the paused time
+                                    if ssShift in ShiftState
+                                    Then Begin
+                                          TasklessTime.BeginEditting;
+                                    End;
+
+                                    Handled := true;
+                              end;
+                        Ord('0')..Ord('9'):
+                              begin
+                                    // Activate the task for that number, if it exists
+                                    PerformTaskAction(Msg.CharCode - Ord('0'), ShiftState);
+                                    Handled := true;
+                              end;
+                        VK_NUMPAD0..VK_NUMPAD9:
+                              begin
+                                    // Activate using numpad
+                                    // Unfortunately, Shift+Numpad produces distinct VK codes (HOME, END, etc)
+                                    PerformTaskAction(Msg.CharCode - VK_NUMPAD0, ShiftState);
+                                    Handled := true;
+                              end;
+                        VK_BACKTICK:
+                              begin
+                                    // This key happens to be to the left of '1', so treat it as '0'
+                                    PerformTaskAction(0, ShiftState);
+                                    Handled := true;
+                              end;
+                        VK_OEM_PLUS, VK_ADD:
+                              begin
+                                    AddTask;
+
+                                    // If Alt held down, immediately edit the text of the new task
+                                    If ssAlt in ShiftState
+                                    Then Begin
+                                          _taskFrames[_numTasks-1].TaskName.BeginEditting;
+                                    End;
+
+                                    Handled := true;
+                              end;
+                  end;
+            End;
+      End;
 end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);

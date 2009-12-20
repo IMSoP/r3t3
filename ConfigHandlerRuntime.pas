@@ -32,12 +32,17 @@ begin
             Then Begin
                   FileName := Subject.ApplyDateMask(
                            Subject.CurrentState['Autosave', 'Directory']
+                           + '\'
                            + Subject.CurrentState['Autosave', 'FileMask']
                   );
 
                   If FileExists(FileName)
-                        Then LoadState(FileName)
-                        Else SaveState(FileName);
+                  Then Begin
+                        LoadState(FileName);
+                  End Else Begin
+                        ForceDirectories(ExtractFileDir(FileName));
+                        SaveState(FileName);
+                  End;
 
                   AutoSaveCheck.Enabled := true;
             End;

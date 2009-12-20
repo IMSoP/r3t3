@@ -32,9 +32,9 @@ object MainForm: TMainForm
     Margins.Bottom = 0
     Align = alBottom
     BevelOuter = bvNone
+    Color = 15642740
     Constraints.MaxHeight = 30
     Constraints.MinHeight = 30
-    ParentColor = True
     TabOrder = 0
     DesignSize = (
       494
@@ -58,7 +58,7 @@ object MainForm: TMainForm
       Constraints.MaxWidth = 60
       Constraints.MinWidth = 60
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
+      Font.Color = 4408279
       Font.Height = -13
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -126,9 +126,9 @@ object MainForm: TMainForm
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
+    Color = 15642740
     Constraints.MaxHeight = 30
     Constraints.MinHeight = 30
-    ParentColor = True
     TabOrder = 1
     DesignSize = (
       494
@@ -166,7 +166,7 @@ object MainForm: TMainForm
       Width = 69
       Height = 22
       Anchors = [akTop, akRight]
-      Caption = 'Settings...'
+      Caption = 'Options...'
       OnClick = SettingsButtonClick
     end
     object AutoSaveCheck: TCheckBox
