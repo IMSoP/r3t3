@@ -294,7 +294,7 @@ end;
 
 procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-      If Filename = '' Or Not AutoSaveCheck.Checked
+      If (Filename = '') Or (Not AutoSaveCheck.Checked)
       Then Begin
             If MessageDlg(
                   'Your tasks are not being auto-saved; are you sure you want to exit R3T3?',
