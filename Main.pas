@@ -25,6 +25,7 @@ type
     HeaderPanel: TPanel;
     SettingsButton: TSpeedButton;
     procedure SettingsButtonClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     // procedure Button1Click(Sender: TObject);
 
   private
@@ -286,8 +287,24 @@ end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-   //Self.toggleVisible();
-   //Action := caNone;
+      If (Filename <> '') And AutoSaveCheck.Checked
+      Then
+            SaveState(Filename);
+end;
+
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+      If Filename = '' Or Not AutoSaveCheck.Checked
+      Then Begin
+            If MessageDlg(
+                  'Your tasks are not being auto-saved; are you sure you want to exit R3T3?',
+                  mtConfirmation,
+                  [mbYes, mbNo],
+                  0
+            ) = mrNo
+            Then
+                 CanClose := False;
+      End;
 end;
 
 procedure TMainForm.AddTask();

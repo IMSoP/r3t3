@@ -16,6 +16,7 @@ object MainForm: TMainForm
   Position = poScreenCenter
   Visible = True
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShortCut = FormShortCut
   PixelsPerInch = 96
