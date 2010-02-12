@@ -10,6 +10,7 @@ uses
 
 type
   TEditableTime = class(TClickToEdit)
+    procedure TextEditExit(Sender: TObject);
   private
       _timeValue: Integer;
   published
@@ -28,6 +29,8 @@ type
   end;
 
 implementation
+
+uses Main;
 
 {$R *.dfm}
 
@@ -71,8 +74,12 @@ begin
             inherited;
       except
             on E: EConvertError do
+            begin
                   // Clearly, the user tried to hit accept on an invalid time
                   TextEdit.Font.Color := clRed;
+
+                  DebugForm.DebugOut('Refusing to give up focus! My text is ' + TextEdit.Text);
+            end;
       end;
 end;
 
@@ -195,6 +202,18 @@ begin
 
       _timeValue := NewValue;
       UpdateTimeDisplay;
+end;
+
+procedure TEditableTime.TextEditExit(Sender: TObject);
+begin
+      inherited;
+
+      (*
+      If ( Self.TextEdit.CanFocus )
+      Then Begin
+            BeginEditting;
+      End;
+      *)
 end;
 
 procedure TEditableTime.UpdateTimeDisplay;

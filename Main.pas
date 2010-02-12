@@ -3,7 +3,7 @@ unit Main;
 interface
 
 uses
-  _TaskFrame, _ClickToEditFrame, _EditableTimeFrame,
+  _TaskFrame, _ClickToEditFrame, _EditableTimeFrame, UDebug,
   ConfigManager, ConfigState, ConfigHandlerINIFile, ConfigHandlerRuntime, UConfigDialog,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -147,14 +147,6 @@ begin
          FConfigManager.AttachObserver(TConfigHandlerRuntime.Create(Self));
 end;
 
-// If the main form captures a mouse event, it implies any editting is aborted
-procedure TMainForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-begin
-      if _editting <> nil then
-            _editting.DoneEditting(false);
-end;
-
 procedure TMainForm.RegisterHotKeys();
 var
    modifier, key: integer;
@@ -174,10 +166,6 @@ begin
         SetForegroundWindow(Self.Handle);
     end
     else begin
-        // Cancel any outstanding editting
-        if _editting <> nil then
-            _editting.DoneEditting(false);
-
         // minimize our app
         _hidden := true;
         //self.WindowState := wsMinimized;
@@ -227,6 +215,26 @@ begin
             If ssCtrl in ShiftState
             Then Begin
                   // Ctrl-shortcuts are reserved
+                  case Msg.CharCode of
+                        Ord('D'):
+                              begin
+                                    // Ctrl-Shift-D for Show/Hide Debug
+                                    If ssShift in ShiftState
+                                    Then Begin
+                                          If DebugForm.Visible
+                                          Then Begin
+                                                DebugForm.Hide;
+                                          End Else Begin
+                                                DebugForm.Left := MainForm.Left + MainForm.Width;
+                                                DebugForm.Top := MainForm.Top;
+                                                DebugForm.Height := MainForm.Height;
+                                                DebugForm.Show;
+                                          End;
+
+                                          Handled := true;
+                                    End;
+                              end;
+                  end;
             End Else Begin
                   case Msg.CharCode of
                         VK_BACKSLASH:
@@ -288,10 +296,6 @@ procedure TMainForm.AddTask();
 var
    TempFrame: TTaskFrame;
 begin
-   // Cancel any outstanding editting
-   if _editting <> nil then
-      _editting.DoneEditting(false);
-
    TempFrame := TTaskFrame.Create(MainForm);
 
    TempFrame.Name := 'TaskFrame' + IntToStr(_numTasks);
@@ -319,9 +323,9 @@ procedure TMainForm.DeleteTask(TaskNum: Integer);
 var
    i: Integer;
 begin
-   // Cancel any outstanding editting
-   if _editting <> nil then
-      _editting.DoneEditting(false);
+   // Cancel any outstanding editting on this task
+   if _editting = _taskFrames[TaskNum]
+      then _editting.DoneEditting(false);
 
    if _currentTask = TaskNum
       then MainForm.SetActiveTask(-1);
@@ -405,10 +409,6 @@ begin
    // New task number must be -1, or an index less than the number of tasks
    if TaskNum < _numTasks then
    begin
-      // Cancel any outstanding editting
-      if _editting <> nil then
-            _editting.DoneEditting(false);
-
       // first deactivate the old
       if _currentTask = -1 then
       begin
