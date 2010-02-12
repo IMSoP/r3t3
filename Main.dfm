@@ -17,7 +17,6 @@ object MainForm: TMainForm
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
-  OnMouseDown = FormMouseDown
   OnShortCut = FormShortCut
   PixelsPerInch = 96
   TextHeight = 13

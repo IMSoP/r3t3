@@ -70,8 +70,6 @@ type
     procedure TickTimerTimer(Sender: TObject);
     procedure KillerTimer(Sender: TObject);
     procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
-    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
     procedure SaveState(OutFileName:String);
     procedure LoadState(InFileName:String);
     procedure SetFilename(NewValue: TFileName);
@@ -296,6 +294,10 @@ procedure TMainForm.AddTask();
 var
    TempFrame: TTaskFrame;
 begin
+   // Attempt to cancel any outstanding editting
+   If _editting <> nil
+      Then _editting.DoneEditting(True);
+
    TempFrame := TTaskFrame.Create(MainForm);
 
    TempFrame.Name := 'TaskFrame' + IntToStr(_numTasks);
@@ -323,9 +325,16 @@ procedure TMainForm.DeleteTask(TaskNum: Integer);
 var
    i: Integer;
 begin
-   // Cancel any outstanding editting on this task
-   if _editting = _taskFrames[TaskNum]
+   // Definitely cancel any outstanding editting on this task
+   if
+      ( _editting = _taskFrames[TaskNum].TaskName )
+      Or
+      ( _editting = _taskFrames[TaskNum].TaskTime )
       then _editting.DoneEditting(false);
+
+   // Attempt to cancel any outstanding editting
+   If _editting <> nil
+      Then _editting.DoneEditting(True);
 
    if _currentTask = TaskNum
       then MainForm.SetActiveTask(-1);
@@ -406,6 +415,10 @@ end;
 
 procedure TMainForm.SetActiveTask(TaskNum: Integer);
 begin
+   // Attempt to cancel any outstanding editting
+   If _editting <> nil
+      Then _editting.DoneEditting(True);
+
    // New task number must be -1, or an index less than the number of tasks
    if TaskNum < _numTasks then
    begin
