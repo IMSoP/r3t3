@@ -80,8 +80,6 @@ var
 begin
       if not ReadOnly then
       begin
-            DebugForm.DebugOut('Begin BeginEditting: My text is ' + TextEdit.Text);
-
             // Make sure the correct text is in the edit box, and flip the display
             TextEdit.Text := _realText;
             TextDisplay.Visible := false;
@@ -91,15 +89,12 @@ begin
             // Detect if another input has refused to give up focus!
             If MainForm.Editting <> Nil
             Then Begin
-                  DebugForm.DebugOut('Kindly returning focus to another control. My text is ' + TextEdit.Text);
-
                   OldEdittingValue := MainForm.Editting;
                   // Return focus to the control which is still in edit mode
                   MainForm.ActiveControl := MainForm.Editting.TextEdit;
                   // This will have caused a call to DoneEditting, so we need to restore the form's tracking var
                   MainForm.Editting := OldEdittingValue;
             End Else Begin
-                  DebugForm.DebugOut('I have the focus! My text is ' + TextEdit.Text);
                   TextEdit.SelectAll;
 
                   // Display the Yes/No buttons; order is important: they stack up from the right
@@ -110,15 +105,11 @@ begin
                   // Doing this last allows other elements to react to us taking focus first
                   MainForm.Editting := Self;
             End;
-
-            DebugForm.DebugOut('Done BeginEditting: My text is ' + TextEdit.Text);
       end;
 end;
 
 procedure TClickToEdit.DoneEditting(AcceptText: boolean);
 begin
-      DebugForm.DebugOut('Begin DoneEditting: My text is ' + TextEdit.Text);
-
       // Read the text out of the edit box (if accepted), and flip the display
       If AcceptText
             Then DisplayText := TextEdit.Text;
@@ -132,8 +123,6 @@ begin
 
       // Tell the main frame we're all done
       MainForm.Editting := nil;
-
-      DebugForm.DebugOut('Done DoneEditting: My text is ' + TextEdit.Text);
 end;
 
 // Event Handlers -  mostly either accept or reject changes

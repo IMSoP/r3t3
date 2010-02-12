@@ -30,7 +30,7 @@ type
 
 implementation
 
-uses Main;
+uses Main, UDebug;
 
 {$R *.dfm}
 
@@ -77,8 +77,7 @@ begin
             begin
                   // Clearly, the user tried to hit accept on an invalid time
                   TextEdit.Font.Color := clRed;
-
-                  DebugForm.DebugOut('Refusing to give up focus! My text is ' + TextEdit.Text);
+                  // This will now not proceed with the main DoneEditting code
             end;
       end;
 end;
