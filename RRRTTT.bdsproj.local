@@ -32,5 +32,7 @@
     <Transaction>2009/02/06 20:15:34.421.pas,Y:\zrun\RRRTTT\0.4\OKCANCL2.pas=Y:\zrun\RRRTTT\0.4\UConfigDialog.pas</Transaction>
     <Transaction>2009/02/06 20:15:34.421.dfm,Y:\zrun\RRRTTT\0.4\OKCANCL2.dfm=Y:\zrun\RRRTTT\0.4\UConfigDialog.dfm</Transaction>
     <Transaction>2009/02/09 21:01:33.765.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigHandlerRuntime.pas</Transaction>
+    <Transaction>2010/02/12 21:57:40.660.pas,Y:\Projects\RRRTTT\trunk\Unit1.pas=Y:\Projects\RRRTTT\trunk\UDebug.pas</Transaction>
+    <Transaction>2010/02/12 21:57:40.660.dfm,Y:\Projects\RRRTTT\trunk\Unit1.dfm=Y:\Projects\RRRTTT\trunk\UDebug.dfm</Transaction>
   </Transactions>
 </BorlandProject>

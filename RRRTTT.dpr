@@ -45,7 +45,8 @@ uses
   UConfigDialog in 'UConfigDialog.pas' {ConfigDialog},
   PCRE in 'PCRE\PCRE.pas',
   pcre_dll in 'PCRE\pcre_dll.pas',
-  ConfigHandlerRuntime in 'ConfigHandlerRuntime.pas';
+  ConfigHandlerRuntime in 'ConfigHandlerRuntime.pas',
+  UDebug in 'UDebug.pas' {DebugForm};
 
 {$R *.res}
 
@@ -63,5 +64,6 @@ begin
   Application.Title := 'Rowan''s Really Rubbish Time Tracking Tool';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TConfigDialog, ConfigDialog);
+  Application.CreateForm(TDebugForm, DebugForm);
   Application.Run;
 end.
