@@ -154,7 +154,7 @@ begin
       If Not Done
       Then Begin
             // Not sure if this leaks memory - there doesn't seem to be a destructor?
-            Regex := RegexCreate('^(\d*).(\d*)$');
+            Regex := RegexCreate('^(\d*)\.(\d*)$');
             Match := Regex.Match(NewValue);
             If ( Match.Success )
             Then Begin
