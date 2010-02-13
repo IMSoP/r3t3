@@ -20,8 +20,6 @@ object TaskFrame: TTaskFrame
     Constraints.MaxHeight = 33
     Constraints.MinHeight = 33
     TabOrder = 0
-    ExplicitWidth = 529
-    ExplicitHeight = 50
     DesignSize = (
       484
       33)
@@ -153,7 +151,7 @@ object TaskFrame: TTaskFrame
       TabStop = True
       ExplicitLeft = 47
       ExplicitTop = 4
-      ExplicitWidth = 362
+      ExplicitWidth = 321
       inherited YesButton: TSpeedButton
         Left = 306
         ExplicitLeft = 345
@@ -164,11 +162,11 @@ object TaskFrame: TTaskFrame
       end
       inherited TextEdit: TEdit
         Width = 289
-        ExplicitWidth = 330
+        ExplicitWidth = 289
       end
       inherited TextDisplay: TPanel
         Width = 289
-        ExplicitWidth = 330
+        ExplicitWidth = 289
       end
     end
     inline TaskTime: TEditableTime
@@ -179,7 +177,7 @@ object TaskFrame: TTaskFrame
       Anchors = [akTop, akRight, akBottom]
       TabOrder = 1
       TabStop = True
-      ExplicitLeft = 445
+      ExplicitLeft = 404
       ExplicitTop = 3
     end
   end

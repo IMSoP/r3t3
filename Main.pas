@@ -26,7 +26,6 @@ type
     SettingsButton: TSpeedButton;
     procedure SettingsButtonClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    // procedure Button1Click(Sender: TObject);
 
   private
     FConfigManager: TConfigManager;
@@ -86,45 +85,6 @@ var
 implementation
 
 {$R *.dfm}
-
-(*
-procedure TMainForm.Button1Click(Sender: TObject);
-var
-      FinalString: String;
-      MaskStart, MaskEnd: Integer;
-      MaskString, DateString: String;
-
-      WorkingState: TConfigState;
-begin
-     FinalString := Edit1.Text;
-
-     repeat
-            MaskStart := Pos('{', FinalString);
-            MaskEnd := PosEx('}', FinalString, MaskStart);
-
-            // Detect when we've run out of {...} pairs
-            if ( (MaskStart = 0) Or (MaskEnd = 0) ) then
-            begin
-                  break;
-            end;
-
-            MaskString := MidStr(FinalString, MaskStart + 1, MaskEnd - MaskStart - 1);
-
-            DateTimeToString(DateString, MaskString, Now());
-
-            FinalString := ReplaceStr(FinalString, '{' + MaskString + '}', DateString);
-      until False;
-
-      WorkingState := TConfigState.Clone(FConfigManager.CurrentState);
-      
-      WorkingState['foo','bar'] := FinalString;
-      FConfigManager.CurrentState := WorkingState;
-      WorkingState.Free;
-
-      ShowMessage(FConfigManager.CurrentState['foo','bar']);
-end;
-*)
-
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -255,6 +215,12 @@ begin
                                     PerformTaskAction(Msg.CharCode - Ord('0'), ShiftState);
                                     Handled := true;
                               end;
+                        Ord('A')..Ord('Z'):
+                              begin
+                                    // Activate task for number above 10, if it exists
+                                    PerformTaskAction(Msg.CharCode - Ord('A') + 10, ShiftState);
+                                    Handled := true;
+                              end;
                         VK_NUMPAD0..VK_NUMPAD9:
                               begin
                                     // Activate using numpad
@@ -321,11 +287,9 @@ begin
    TempFrame.Top := HeaderPanel.Height + (_numTasks * TempFrame.Height);
    TempFrame.Width := MainForm.ClientWidth;
 
-   TempFrame.KeyLabel.Caption := IntToStr(_numTasks);
-
    SetLength(_taskFrames, _numTasks+1);
    _taskFrames[_numTasks] := TempFrame;
-   TempFrame.Tag := _numTasks;
+   TempFrame.TaskNumber := _numTasks;
 
    TempFrame.Parent := MainForm;
 
@@ -359,16 +323,18 @@ begin
    // Basically to avoid confusion
    TickTimer.Enabled := False;
 
-   _taskFrames[TaskNum].Name := 'KillMe';
+   // We want to be able to reuse the component name, so need something unique... 
+   MainForm.Killer.Tag := MainForm.Killer.Tag + 1;
+   _taskFrames[TaskNum].Name := 'KillMe' + IntToStr(MainForm.Killer.Tag);
+
    _killMe := _taskFrames[TaskNum];
    MainForm.Killer.Enabled := True;
 
    for i := TaskNum to _numTasks - 2 do
    begin
       _taskFrames[i] := _taskFrames[i+1];
-      _taskFrames[i].Tag := i;
+      _taskFrames[i].TaskNumber := i;
       _taskFrames[i].Name := 'TaskFrame' + IntToStr(i);
-      _taskFrames[i].KeyLabel.Caption := IntToStr(i);
       _taskFrames[i].Top := HeaderPanel.Height + (i * _taskFrames[i].Height);
    end;
 

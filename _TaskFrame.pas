@@ -3,27 +3,31 @@ unit _TaskFrame;
 interface
 
 uses
-      _ClickToEditFrame,
+  _ClickToEditFrame, _EditableTimeFrame,
 
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, _EditableTimeFrame;
+  StdCtrls, ExtCtrls, Buttons;
 
 type
   TTaskFrame = class(TFrame)
+  private
+    { Private declarations }
+    FTaskNumber: Integer;
+  public
+    { Public declarations }
+  published
     TaskPanel: TPanel;
     StartBtn: TSpeedButton;
     StopBtn: TSpeedButton;
     DeleteButton: TSpeedButton;
-    KeyLabel: TLabel;
     TaskName: TClickToEdit;
     TaskTime: TEditableTime;
+    KeyLabel: TLabel;
     procedure StartBtnClick(Sender: TObject);
     procedure DeleteButtonClick(Sender: TObject);
     procedure StopBtnClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    procedure SetTaskNumber(NewTaskNumber: Integer);
+    property TaskNumber: Integer read FTaskNumber write SetTaskNumber;
   end;
 
 implementation
@@ -32,9 +36,20 @@ uses Main;
 
 {$R *.dfm}
 
+procedure TTaskFrame.SetTaskNumber(NewTaskNumber: Integer);
+begin
+      // Set the internal field
+      FTaskNumber := NewTaskNumber;
+
+      // Display as a number, or as a letter (tasks 10..35 are A..Z)
+      If (NewTaskNumber < 10) Or (NewTaskNumber > 35)
+            Then KeyLabel.Caption := IntToStr(NewTaskNumber)
+            Else KeyLabel.Caption := Chr(NewTaskNumber - 10 + Ord('A'));
+end;
+
 procedure TTaskFrame.StartBtnClick(Sender: TObject);
 begin
-      MainForm.SetActiveTask(Self.Tag);
+      MainForm.SetActiveTask(Self.TaskNumber);
 end;
 
 procedure TTaskFrame.StopBtnClick(Sender: TObject);
@@ -44,7 +59,7 @@ end;
 
 procedure TTaskFrame.DeleteButtonClick(Sender: TObject);
 begin
-      MainForm.DeleteTask(Self.Tag);
+      MainForm.DeleteTask(Self.TaskNumber);
 end;
 
 end.
