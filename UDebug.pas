@@ -8,6 +8,7 @@ uses
 
 type
   TDebugForm = class(TForm)
+  published
     DebugOutput: TMemo;
   private
     { Private declarations }

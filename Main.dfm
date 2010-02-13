@@ -212,4 +212,18 @@ object MainForm: TMainForm
     Left = 136
     Top = 48
   end
+  object TheTrayIcon: TTrayIcon
+    Hint = 'R3T3'
+    Icons = TrayIconImageList
+    Visible = True
+    OnDblClick = TheTrayIconClick
+    Left = 168
+    Top = 48
+  end
+  object TrayIconImageList: TImageList
+    Height = 32
+    Width = 32
+    Left = 200
+    Top = 48
+  end
 end
