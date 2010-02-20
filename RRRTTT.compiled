@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Compiler Value="C:\Progra~1\Lazarus\fpc\2.2.4\bin\i386-win32\fpc.exe" Date="995711722"/>
+  <Params Value=" -MObjFPC -Scgi -O1 -gl -vewnhi -l -FiY:\Projects\RRRTTT\branches\lazarus\PCRE\ -FuY:\Projects\RRRTTT\branches\lazarus\PCRE\ -FuC:\Progra~1\Lazarus\lcl\units\i386-win32\ -FuC:\Progra~1\Lazarus\lcl\units\i386-win32\win32\ -FuC:\Progra~1\Lazarus\packager\units\i386-win32\ -FuY:\Projects\RRRTTT\branches\lazarus\ -Fu. -FEY:\Projects\RRRTTT\branches\lazarus\ -oRRRTTT.exe -dLCL -dLCLwin32 RRRTTT.lpr"/>
+</CONFIG>

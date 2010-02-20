@@ -1,11 +1,13 @@
 unit _ClickToEditFrame;
 
+{$MODE Delphi}
+
 interface
 
 uses
 
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, Buttons, ExtCtrls, StdCtrls;
+  LCLIntf, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs, Buttons, ExtCtrls, StdCtrls, LResources;
 
 type
   TClickToEdit = class(TFrame)
@@ -45,7 +47,6 @@ implementation
 
 uses Main, UDebug;
 
-{$R *.dfm}
 
 // Set initial state
 constructor TClickToEdit.Create(Owner: TComponent);
@@ -173,5 +174,9 @@ begin
       Self.DoneEditting(true);
 end;
 
+
+initialization
+  {$i _ClickToEditFrame.lrs}
+  {$i _ClickToEditFrame.lrs}
 
 end.

@@ -1,0 +1,66 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TMainForm','FORMDATA',[
+  'TPF0'#9'TMainForm'#8'MainForm'#4'Left'#3'I'#1#6'Height'#3#131#0#3'Top'#3'n'#1
+  +#5'Width'#3#238#1#11'BorderStyle'#7#13'bsSizeToolWin'#7'Caption'#6')Rowan''s'
+  +' Really Rubbish Time Tracking Tool'#12'ClientHeight'#3#131#0#11'ClientWidth'
+  +#3#238#1#5'Color'#7#9'clSkyBlue'#20'Constraints.MinWidth'#3'r'#1#11'Font.Hei'
+  +'ght'#2#245#9'Font.Name'#6#13'MS Sans Serif'#7'OnClose'#7#9'FormClose'#12'On'
+  +'CloseQuery'#7#14'FormCloseQuery'#8'OnCreate'#7#10'FormCreate'#10'OnShortCut'
+  +#7#12'FormShortCut'#8'Position'#7#14'poScreenCenter'#10'LCLVersion'#6#8'0.9.'
+  +'28.2'#7'Visible'#9#0#6'TPanel'#11'FooterPanel'#4'Left'#2#0#6'Height'#2#30#3
+  +'Top'#2'e'#5'Width'#3#238#1#5'Align'#7#8'alBottom'#10'BevelOuter'#7#6'bvNone'
+  +#12'ClientHeight'#2#30#11'ClientWidth'#3#238#1#5'Color'#4't'#176#238#0#21'Co'
+  +'nstraints.MaxHeight'#2#30#21'Constraints.MinHeight'#2#30#11'ParentColor'#8#8
+  +'TabOrder'#2#0#0#12'TSpeedButton'#9'AddButton'#4'Left'#2#2#6'Height'#2#25#3
+  +'Top'#2#3#5'Width'#2'Z'#7'Anchors'#11#6'akLeft'#8'akBottom'#0#7'Caption'#6#8
+  +'Add Task'#5'Color'#7#9'clBtnFace'#9'NumGlyphs'#2#0#7'OnClick'#7#14'AddButto'
+  +'nClick'#0#0#6'TLabel'#13'TasklessLabel'#4'Left'#3#231#0#6'Height'#2#16#3'To'
+  +'p'#2#7#5'Width'#2'<'#7'Anchors'#11#7'akRight'#8'akBottom'#0#7'Caption'#6#7
+  +'Paused:'#20'Constraints.MaxWidth'#2'<'#20'Constraints.MinWidth'#2'<'#10'Fon'
+  +'t.Color'#4#215'CC'#0#11'Font.Height'#2#243#9'Font.Name'#6#13'MS Sans Serif'
+  +#10'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#0#0#6'TLab'
+  +'el'#10'TotalLabel'#4'Left'#3'v'#1#6'Height'#2#16#3'Top'#2#7#5'Width'#2')'#7
+  +'Anchors'#11#7'akRight'#8'akBottom'#0#7'Caption'#6#6'Total:'#10'Font.Color'#7
+  +#7'clBlack'#11'Font.Height'#2#243#9'Font.Name'#6#13'MS Sans Serif'#10'Font.S'
+  +'tyle'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#0#0#244#13'TEditabl'
+  +'eTime'#12'TasklessTime'#4'Left'#3'%'#1#3'Top'#2#3#5'Width'#2'F'#7'Anchors'
+  +#11#7'akRight'#8'akBottom'#0#11'ClientWidth'#2'F'#20'Constraints.MaxWidth'#2
+  +'F'#20'Constraints.MinWidth'#2'F'#0#241#12'TSpeedButton'#9'YesButton'#4'Left'
+  +#2'*'#0#0#241#12'TSpeedButton'#8'NoButton'#4'Left'#2'8'#0#0#241#5'TEdit'#8'T'
+  +'extEdit'#5'Width'#2'*'#0#0#0#244#13'TEditableTime'#9'TotalTime'#4'Left'#3
+  +#162#1#3'Top'#2#3#5'Width'#2'F'#7'Anchors'#11#7'akRight'#8'akBottom'#0#11'Cl'
+  +'ientWidth'#2'F'#8'TabOrder'#2#1#0#241#12'TSpeedButton'#9'YesButton'#4'Left'
+  +#2'*'#0#0#241#12'TSpeedButton'#8'NoButton'#4'Left'#2'8'#0#0#241#5'TEdit'#8'T'
+  +'extEdit'#5'Width'#2'*'#0#0#0#0#6'TPanel'#11'HeaderPanel'#4'Left'#2#0#6'Heig'
+  +'ht'#2#30#3'Top'#2#0#5'Width'#3#238#1#5'Align'#7#5'alTop'#10'BevelOuter'#7#6
+  +'bvNone'#12'ClientHeight'#2#30#11'ClientWidth'#3#238#1#5'Color'#4't'#176#238
+  +#0#21'Constraints.MaxHeight'#2#30#21'Constraints.MinHeight'#2#30#11'ParentCo'
+  +'lor'#8#8'TabOrder'#2#1#0#6'TLabel'#13'FilenameLabel'#4'Left'#3#199#0#6'Heig'
+  +'ht'#2#13#3'Top'#2#9#5'Width'#3#213#0#7'Anchors'#11#6'akLeft'#7'akRight'#8'a'
+  +'kBottom'#0#8'AutoSize'#8#11'ParentColor'#8#0#0#12'TSpeedButton'#10'LoadButt'
+  +'on'#4'Left'#2'7'#6'Height'#2#23#3'Top'#2#4#5'Width'#2'9'#7'Anchors'#11#6'ak'
+  +'Left'#8'akBottom'#0#7'Caption'#6#7'Load...'#5'Color'#7#9'clBtnFace'#9'NumGl'
+  +'yphs'#2#0#7'OnClick'#7#15'LoadButtonClick'#0#0#12'TSpeedButton'#10'SaveButt'
+  +'on'#4'Left'#2#4#6'Height'#2#23#3'Top'#2#4#5'Width'#2'1'#7'Anchors'#11#6'akL'
+  +'eft'#8'akBottom'#0#7'Caption'#6#7'Save...'#5'Color'#7#9'clBtnFace'#9'NumGly'
+  +'phs'#2#0#7'OnClick'#7#15'SaveButtonClick'#0#0#12'TSpeedButton'#14'SettingsB'
+  +'utton'#4'Left'#3#162#1#6'Height'#2#22#3'Top'#2#4#5'Width'#2'E'#7'Anchors'#11
+  +#5'akTop'#7'akRight'#0#7'Caption'#6#10'Options...'#5'Color'#7#9'clBtnFace'#9
+  +'NumGlyphs'#2#0#7'OnClick'#7#19'SettingsButtonClick'#0#0#9'TCheckBox'#13'Aut'
+  +'oSaveCheck'#4'Left'#2'x'#6'Height'#2#17#3'Top'#2#7#5'Width'#2'D'#7'Anchors'
+  +#11#6'akLeft'#8'akBottom'#0#7'Caption'#6#9'Auto-Save'#7'Checked'#9#7'Enabled'
+  +#8#5'State'#7#9'cbChecked'#8'TabOrder'#2#0#0#0#0#6'TTimer'#9'TickTimer'#7'On'
+  +'Timer'#7#14'TickTimerTimer'#4'left'#2#8#3'top'#2'0'#0#0#6'TTimer'#6'Killer'
+  +#7'Enabled'#8#8'Interval'#2#10#7'OnTimer'#7#11'KillerTimer'#4'left'#2'('#3't'
+  +'op'#2'0'#0#0#11'TSaveDialog'#11'SaveDialog1'#10'DefaultExt'#6#4'.tsv'#7'Opt'
+  +'ions'#11#17'ofOverwritePrompt'#14'ofHideReadOnly'#14'ofEnableSizing'#0#4'le'
+  +'ft'#2'H'#3'top'#2'0'#0#0#11'TOpenDialog'#11'OpenDialog1'#10'DefaultExt'#6#4
+  +'.tsv'#7'Options'#11#14'ofHideReadOnly'#15'ofPathMustExist'#15'ofFileMustExi'
+  +'st'#14'ofEnableSizing'#0#4'left'#2'h'#3'top'#2'0'#0#0#6'TTimer'#13'AutoSave'
+  +'Timer'#8'Interval'#4'`'#234#0#0#7'OnTimer'#7#18'AutoSaveTimerTimer'#4'left'
+  +#3#136#0#3'top'#2'0'#0#0#9'TTrayIcon'#11'TheTrayIcon'#4'Hint'#6#4'R3T3'#7'Vi'
+  +'sible'#9#10'OnDblClick'#7#16'TheTrayIconClick'#4'left'#3#168#0#3'top'#2'0'#0
+  +#0#10'TImageList'#17'TrayIconImageList'#6'Height'#2' '#5'Width'#2' '#4'left'
+  +#3#200#0#3'top'#2'0'#0#0#0
+]);

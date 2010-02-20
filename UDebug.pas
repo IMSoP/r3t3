@@ -1,10 +1,12 @@
 unit UDebug;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls;
+  LCLIntf, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, LResources;
 
 type
   TDebugForm = class(TForm)
@@ -22,11 +24,14 @@ var
 
 implementation
 
-{$R *.dfm}
 
 Procedure TDebugForm.DebugOut(DebugItem: String);
 Begin
       DebugOutput.Lines.Add(DebugItem);
 End;
+
+initialization
+  {$i UDebug.lrs}
+  {$i UDebug.lrs}
 
 end.

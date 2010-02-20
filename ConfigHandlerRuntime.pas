@@ -1,5 +1,7 @@
 unit ConfigHandlerRuntime;
 
+{$MODE Delphi}
+
 interface
 
 uses

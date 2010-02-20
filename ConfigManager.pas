@@ -1,9 +1,12 @@
 unit ConfigManager;
 
+{$MODE Delphi}
+{$M+}
+
 interface
 
 uses
-      ConfigState, PCRE,
+      ConfigState, // PCRE,
       Classes, SysUtils, Dialogs, StrUtils;
 
 type
@@ -25,7 +28,7 @@ type
             procedure NotifyObservers;
             procedure SetState(const NewState: TConfigState);
 
-            class function DateReplaceCallback(Match: IMatch): String;
+            // class function DateReplaceCallback(Match: IMatch): String;
       published
             constructor Create;
 
@@ -90,6 +93,7 @@ implementation
             NotifyObservers;
       end;
 
+      (*
       class function TConfigManager.DateReplaceCallback(Match: IMatch): String;
       begin
            DateTimeToString(Result, Match.Value, Now());
@@ -97,8 +101,13 @@ implementation
            // [Delphi strings are indexed 1..N, we want 2..N-1, which has length N-2] 
            Result := MidStr(Result, 2, Length(Result)-2);
       end;
+      *)
 
       class function TConfigManager.ApplyDateMask(const MaskString: String): String;
+      begin
+           Result := MaskString;
+      end;
+      (*
       var
             ReplaceRegex: IRegex;
             Callback: TRegexMatchEvaluator;
@@ -107,4 +116,5 @@ implementation
             Callback := DateReplaceCallback;
             Result := ReplaceRegex.Replace(MaskString, Callback);
       end;
+      *)
 end.

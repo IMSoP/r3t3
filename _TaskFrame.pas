@@ -1,12 +1,14 @@
 unit _TaskFrame;
 
+{$MODE Delphi}
+
 interface
 
 uses
   _ClickToEditFrame, _EditableTimeFrame,
 
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, Buttons;
+  LCLIntf, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, ExtCtrls, Buttons, LResources;
 
 type
   TTaskFrame = class(TFrame)
@@ -34,7 +36,6 @@ implementation
 
 uses Main;
 
-{$R *.dfm}
 
 procedure TTaskFrame.SetTaskNumber(NewTaskNumber: Integer);
 begin
@@ -61,5 +62,9 @@ procedure TTaskFrame.DeleteButtonClick(Sender: TObject);
 begin
       MainForm.DeleteTask(Self.TaskNumber);
 end;
+
+initialization
+  {$i _TaskFrame.lrs}
+  {$i _TaskFrame.lrs}
 
 end.

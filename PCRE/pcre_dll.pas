@@ -47,6 +47,8 @@
 
 unit pcre_dll;
 
+{$MODE Delphi}
+
 {$ALIGN ON}
 {$MINENUMSIZE 4}
 
@@ -709,7 +711,7 @@ function _ltoupper(c : integer):Integer; cdecl;
 implementation
 
 
-uses sysutils, windows;
+uses sysutils, LCLIntf;
 
 {$IFDEF USE_MSVCRT}
 function _setlocale(category: Integer; locale: PChar):PChar; cdecl; external 'MSVCRT.DLL' name 'setlocale';
@@ -958,11 +960,13 @@ begin
   Move(source^, dest^, count);
 end;
 
+{
 procedure sprintf(Buffer, Format: PChar; Arguments: va_list); cdecl;
 // Optional parameters are passed in a va_list as the last parameter.
 begin
   wvsprintf(Buffer, Format, @Arguments);
 end;
+}
 
 //===========================================================================
 //

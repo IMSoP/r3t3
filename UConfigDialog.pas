@@ -1,11 +1,13 @@
 unit UConfigDialog;
 
+{$MODE Delphi}
+
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls, Dialogs, StrUtils,
+uses LCLIntf, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
+  Buttons, ExtCtrls, Dialogs, LResources, StrUtils,
 
-  ConfigManager, ConfigState, PCRE;
+  ConfigManager, ConfigState; // , PCRE;
 
 
 type
@@ -47,7 +49,6 @@ var
 
 implementation
 
-{$R *.dfm}
 
 procedure TConfigDialog.ASDirectoryBrowseButtonClick(Sender: TObject);
 begin
@@ -150,5 +151,9 @@ begin
 
       ASCurrentFileDisplay.Visible := True;
 end;
+
+initialization
+  {$i UConfigDialog.lrs}
+  {$i UConfigDialog.lrs}
 
 end.

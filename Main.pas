@@ -1,21 +1,24 @@
 unit Main;
 
+{$MODE Delphi}
+
 interface
 
 uses
   _TaskFrame, _ClickToEditFrame, _EditableTimeFrame, UDebug,
   ConfigManager, ConfigState, ConfigHandlerINIFile, ConfigHandlerRuntime, UConfigDialog,
 
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, ExtDlgs, StrUtils, ImgList;
+  LCLIntf, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, ExtDlgs, StrUtils, ImgList,
+  LResources, Windows;
 
 const
    // Better names for some Virtual Keycodes;
    //       see ms-help://borland.bds4/winui/winui/windowsuserinterface/userinput/VirtualKeyCodes.htm
    // This is apparently the US standard keyboard \ and | key; works for me
-   VK_BACKSLASH = VK_OEM_5;
+   VK_BACKSLASH = 42; // VK_OEM_5;
    // No definition listed for US standard keyboard, but seems to be back-tick in UK
-   VK_BACKTICK = VK_OEM_8;
+   VK_BACKTICK = 43; // VK_OEM_8;
    // Registered identifier that Win32 will send back to us for our global hotkey
    HK_SHOWHIDE = 1;
 
@@ -88,7 +91,6 @@ var
 
 implementation
 
-{$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -119,7 +121,7 @@ var
 begin
       NewIcon := TIcon.Create;
       NewIcon.LoadFromResourceName(hInstance, 'Foo');
-      TheTrayIcon.IconIndex := TrayIconImageList.AddIcon(NewIcon);
+      // TheTrayIcon.IconIndex := TrayIconImageList.AddIcon(NewIcon);
       NewIcon.Free;
 
       For i := 0 To 9
@@ -236,7 +238,7 @@ begin
                               end;
                         Ord('0')..Ord('9'):
                               begin
-                                    TheTrayIcon.IconIndex := Msg.CharCode - Ord('0');
+                                    // TheTrayIcon.IconIndex := Msg.CharCode - Ord('0');
                                     // Activate the task for that number, if it exists
                                     PerformTaskAction(Msg.CharCode - Ord('0'), ShiftState);
                                     Handled := true;
@@ -260,7 +262,8 @@ begin
                                     PerformTaskAction(0, ShiftState);
                                     Handled := true;
                               end;
-                        VK_OEM_PLUS, VK_ADD:
+                        // VK_OEM_PLUS, VK_ADD:
+                        44:
                               begin
                                     AddTask;
 
@@ -660,6 +663,10 @@ begin
 
       TotalTime.Time := Total;
 end;
+
+initialization
+  {$i Main.lrs}
+  {$i Main.lrs}
 
 end.
 

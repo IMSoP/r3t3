@@ -1,0 +1,9 @@
+LazarusResources.Add('TDebugForm','FORMDATA',[
+  'TPF0'#10'TDebugForm'#9'DebugForm'#4'Left'#2#0#3'Top'#2#0#11'BorderStyle'#7#13
+  +'bsSizeToolWin'#7'Caption'#6#5'Debug'#12'ClientHeight'#3#14#1#11'ClientWidth'
+  +#3'r'#1#5'Color'#7#9'clBtnFace'#12'Font.Charset'#7#15'DEFAULT_CHARSET'#10'Fo'
+  +'nt.Color'#7#12'clWindowText'#11'Font.Height'#2#245#9'Font.Name'#6#6'Tahoma'
+  +#10'Font.Style'#11#0#13'PixelsPerInch'#2'`'#0#5'TMemo'#11'DebugOutput'#4'Lef'
+  +'t'#2#0#3'Top'#2#0#5'Width'#3'r'#1#6'Height'#3#14#1#5'Align'#7#8'alClient'#10
+  +'ScrollBars'#7#6'ssBoth'#8'TabOrder'#2#0#0#0#0
+]);

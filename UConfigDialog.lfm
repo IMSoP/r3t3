@@ -1,0 +1,129 @@
+object ConfigDialog: TConfigDialog
+  Left = 206
+  Height = 183
+  Top = 173
+  Width = 367
+  BorderStyle = bsDialog
+  Caption = 'Settings'
+  ClientHeight = 183
+  ClientWidth = 367
+  ParentFont = True
+  Position = poMainFormCenter
+  LCLVersion = '0.9.28.2'
+  object OKBtn: TButton
+    Left = 288
+    Height = 26
+    Top = 152
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = 'OK'
+    Default = True
+    ModalResult = 1
+    OnClick = OKBtnClick
+    TabOrder = 0
+  end
+  object CancelBtn: TButton
+    Left = 207
+    Height = 26
+    Top = 152
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    OnClick = CancelBtnClick
+    TabOrder = 1
+  end
+  object AutoSaveGroup: TGroupBox
+    Left = 1
+    Height = 146
+    Top = 1
+    Width = 363
+    Anchors = [akTop, akLeft, akRight]
+    Caption = 'Auto-Save'
+    ClientHeight = 128
+    ClientWidth = 359
+    TabOrder = 2
+    object ASDirectoryBrowseButton: TSpeedButton
+      Left = 290
+      Height = 22
+      Top = 65
+      Width = 63
+      Caption = 'Browse...'
+      Color = clBtnFace
+      Enabled = False
+      NumGlyphs = 0
+      OnClick = ASDirectoryBrowseButtonClick
+    end
+    object ASFileMaskLabel: TLabel
+      Left = 7
+      Height = 14
+      Top = 68
+      Width = 48
+      Caption = 'File Mask:'
+      FocusControl = ASFileMaskEdit
+      ParentColor = False
+    end
+    object ASDirectoryLabel: TLabel
+      Left = 6
+      Height = 14
+      Top = 41
+      Width = 49
+      Caption = 'Directory:'
+      FocusControl = ASDirectoryEdit
+      ParentColor = False
+    end
+    object ASCurrentFileDisplay: TLabel
+      Left = 7
+      Height = 13
+      Top = 92
+      Width = 346
+      AutoSize = False
+      Caption = 'Current Filename: '
+      ParentColor = False
+      Visible = False
+    end
+    object ASHelpText: TLabel
+      Left = 7
+      Height = 27
+      Top = 111
+      Width = 340
+      Caption = 'Text in braces {} will be substituted for the current date using Delphi''s DateTimeToString routine - e.g. "Hours {yyyy-mm-dd}.txt"'
+      ParentColor = False
+      WordWrap = True
+    end
+    object ASFileMaskEdit: TEdit
+      Left = 57
+      Height = 21
+      Top = 65
+      Width = 121
+      Enabled = False
+      OnChange = ASFileMaskEditChange
+      TabOrder = 0
+      Text = 'ASFileMaskEdit'
+    end
+    object ASDirectoryEdit: TEdit
+      Left = 57
+      Height = 21
+      Top = 38
+      Width = 296
+      Enabled = False
+      OnChange = ASDirectoryEditChange
+      TabOrder = 1
+      Text = 'ASDirectoryEdit'
+    end
+    object ASEnabledCheck: TCheckBox
+      Left = 7
+      Height = 17
+      Top = 18
+      Width = 244
+      Caption = 'Start saving automatically when R3T3 launches'
+      OnClick = ASEnabledCheckClick
+      TabOrder = 2
+    end
+  end
+  object ASDirectoryDialog: TSaveDialog
+    left = 384
+    top = 104
+  end
+end

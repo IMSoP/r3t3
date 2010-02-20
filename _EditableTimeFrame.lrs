@@ -1,0 +1,11 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TEditableTime','FORMDATA',[
+  'TPF0'#241#13'TEditableTime'#12'EditableTime'#5'Width'#2's'#11'ClientWidth'#2
+  +'s'#10'DesignLeft'#3#223#0#9'DesignTop'#3#130#0#0#241#12'TSpeedButton'#9'Yes'
+  +'Button'#4'Left'#2'W'#6'Height'#2#24#3'Top'#2#0#0#0#241#12'TSpeedButton'#8'N'
+  +'oButton'#4'Left'#2'e'#6'Height'#2#24#3'Top'#2#0#0#0#241#5'TEdit'#8'TextEdit'
+  +#5'Width'#2'W'#4'Text'#6#5'00:00'#0#0#241#6'TPanel'#11'TextDisplay'#5'Width'
+  +#2'F'#5'Align'#7#8'alCustom'#9'Alignment'#7#8'taCenter'#7'Caption'#6#7'0:00:'
+  +'00'#10'Font.Style'#11#6'fsBold'#0#0#0#0
+]);

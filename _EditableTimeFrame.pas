@@ -1,12 +1,14 @@
 unit _EditableTimeFrame;
 
+{$MODE Delphi}
+
 interface
 
 uses
-      _ClickToEditFrame, PCRE,
+      _ClickToEditFrame,  // PCRE,
 
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, Buttons, StrUtils, Math;
+  LCLIntf, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Buttons, LResources, StrUtils, Math;
 
 type
   TEditableTime = class(TClickToEdit)
@@ -32,7 +34,6 @@ implementation
 
 uses Main, UDebug;
 
-{$R *.dfm}
 
 // Set initial state
 constructor TEditableTime.Create(Owner: TComponent);
@@ -84,13 +85,17 @@ end;
 
 procedure TEditableTime.SetDisplayText(NewValue: string);
 var
-      Regex: IRegex;
-      Match: IMatch;
+      // Regex: IRegex;
+      // Match: IMatch;
       hours, minutes, seconds, fraction: Integer;
       Done: boolean;
 begin
       Done := false;
 
+      Time := ( StrToInt(NewValue) * 60 );
+      Done := true;
+
+      {
       // If the input is a single number, interpret as that many minutes
       Regex := RegexCreate('^\d+$');
       Match := Regex.Match(NewValue);
@@ -104,7 +109,9 @@ begin
       If Not Done
       Then Begin
             // Not sure if this leaks memory - there doesn't seem to be a destructor?
-            Regex := RegexCreate('^(\d*):(\d{0,2})$');
+            Regex := RegexCreate('^(\d*):(\d{0,2
+
+            )$');
             Match := Regex.Match(NewValue);
             If ( Match.Success )
             Then Begin
@@ -129,7 +136,9 @@ begin
       If Not Done
       Then Begin
             // Not sure if this leaks memory - there doesn't seem to be a destructor?
-            Regex := RegexCreate('^(\d*):(\d{1,2}):(\d*)$');
+            Regex := RegexCreate('^(\d*):(\d{1,2
+
+            ):(\d*)$');
             Match := Regex.Match(NewValue);
             If ( Match.Success )
             Then Begin
@@ -189,6 +198,7 @@ begin
       // If everything fails, raise hell (or an error)
       If Not Done
             Then Raise EConvertError.Create('Invalid time specification: '+NewValue);
+      }
 
       UpdateTimeDisplay;
 end;
@@ -227,5 +237,9 @@ begin
        );
        TextDisplay.Caption := _realText;
 end;
+
+initialization
+  {$i _EditableTimeFrame.lrs}
+  {$i _EditableTimeFrame.lrs}
 
 end.

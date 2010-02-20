@@ -1,5 +1,7 @@
 unit ConfigState;
 
+{$MODE Delphi}
+
 interface
 
 uses

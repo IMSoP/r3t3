@@ -1,0 +1,224 @@
+object MainForm: TMainForm
+  Left = 329
+  Height = 131
+  Top = 366
+  Width = 494
+  BorderStyle = bsSizeToolWin
+  Caption = 'Rowan''s Really Rubbish Time Tracking Tool'
+  ClientHeight = 131
+  ClientWidth = 494
+  Color = clSkyBlue
+  Constraints.MinWidth = 370
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnShortCut = FormShortCut
+  Position = poScreenCenter
+  LCLVersion = '0.9.28.2'
+  Visible = True
+  object FooterPanel: TPanel
+    Left = 0
+    Height = 30
+    Top = 101
+    Width = 494
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 30
+    ClientWidth = 494
+    Color = 15642740
+    Constraints.MaxHeight = 30
+    Constraints.MinHeight = 30
+    ParentColor = False
+    TabOrder = 0
+    object AddButton: TSpeedButton
+      Left = 2
+      Height = 25
+      Top = 3
+      Width = 90
+      Anchors = [akLeft, akBottom]
+      Caption = 'Add Task'
+      Color = clBtnFace
+      NumGlyphs = 0
+      OnClick = AddButtonClick
+    end
+    object TasklessLabel: TLabel
+      Left = 231
+      Height = 16
+      Top = 7
+      Width = 60
+      Anchors = [akRight, akBottom]
+      Caption = 'Paused:'
+      Constraints.MaxWidth = 60
+      Constraints.MinWidth = 60
+      Font.Color = 4408279
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object TotalLabel: TLabel
+      Left = 374
+      Height = 16
+      Top = 7
+      Width = 41
+      Anchors = [akRight, akBottom]
+      Caption = 'Total:'
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    inline TasklessTime: TEditableTime
+      Left = 293
+      Top = 3
+      Width = 70
+      Anchors = [akRight, akBottom]
+      ClientWidth = 70
+      Constraints.MaxWidth = 70
+      Constraints.MinWidth = 70
+      inherited YesButton: TSpeedButton
+        Left = 42
+      end
+      inherited NoButton: TSpeedButton
+        Left = 56
+      end
+      inherited TextEdit: TEdit
+        Width = 42
+      end
+    end
+    inline TotalTime: TEditableTime
+      Left = 418
+      Top = 3
+      Width = 70
+      Anchors = [akRight, akBottom]
+      ClientWidth = 70
+      TabOrder = 1
+      inherited YesButton: TSpeedButton
+        Left = 42
+      end
+      inherited NoButton: TSpeedButton
+        Left = 56
+      end
+      inherited TextEdit: TEdit
+        Width = 42
+      end
+    end
+  end
+  object HeaderPanel: TPanel
+    Left = 0
+    Height = 30
+    Top = 0
+    Width = 494
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 30
+    ClientWidth = 494
+    Color = 15642740
+    Constraints.MaxHeight = 30
+    Constraints.MinHeight = 30
+    ParentColor = False
+    TabOrder = 1
+    object FilenameLabel: TLabel
+      Left = 199
+      Height = 13
+      Top = 9
+      Width = 213
+      Anchors = [akLeft, akRight, akBottom]
+      AutoSize = False
+      ParentColor = False
+    end
+    object LoadButton: TSpeedButton
+      Left = 55
+      Height = 23
+      Top = 4
+      Width = 57
+      Anchors = [akLeft, akBottom]
+      Caption = 'Load...'
+      Color = clBtnFace
+      NumGlyphs = 0
+      OnClick = LoadButtonClick
+    end
+    object SaveButton: TSpeedButton
+      Left = 4
+      Height = 23
+      Top = 4
+      Width = 49
+      Anchors = [akLeft, akBottom]
+      Caption = 'Save...'
+      Color = clBtnFace
+      NumGlyphs = 0
+      OnClick = SaveButtonClick
+    end
+    object SettingsButton: TSpeedButton
+      Left = 418
+      Height = 22
+      Top = 4
+      Width = 69
+      Anchors = [akTop, akRight]
+      Caption = 'Options...'
+      Color = clBtnFace
+      NumGlyphs = 0
+      OnClick = SettingsButtonClick
+    end
+    object AutoSaveCheck: TCheckBox
+      Left = 120
+      Height = 17
+      Top = 7
+      Width = 68
+      Anchors = [akLeft, akBottom]
+      Caption = 'Auto-Save'
+      Checked = True
+      Enabled = False
+      State = cbChecked
+      TabOrder = 0
+    end
+  end
+  object TickTimer: TTimer
+    OnTimer = TickTimerTimer
+    left = 8
+    top = 48
+  end
+  object Killer: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = KillerTimer
+    left = 40
+    top = 48
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.tsv'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    left = 72
+    top = 48
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = '.tsv'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    left = 104
+    top = 48
+  end
+  object AutoSaveTimer: TTimer
+    Interval = 60000
+    OnTimer = AutoSaveTimerTimer
+    left = 136
+    top = 48
+  end
+  object TheTrayIcon: TTrayIcon
+    Hint = 'R3T3'
+    Visible = True
+    OnDblClick = TheTrayIconClick
+    left = 168
+    top = 48
+  end
+  object TrayIconImageList: TImageList
+    Height = 32
+    Width = 32
+    left = 200
+    top = 48
+  end
+end

@@ -1,5 +1,8 @@
 unit ConfigHandlerINIFile;
 
+{$MODE Delphi}
+{$M+}
+
 interface
 
 uses

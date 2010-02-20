@@ -64,6 +64,8 @@
 
 unit PCRE;
 
+{$MODE Delphi}
+
 {$ALIGN ON}
 {$MINENUMSIZE 4}
 {$B-}
@@ -300,8 +302,8 @@ type
     function Replace(const Input        : string;
                      const Replacement  : string): string; overload; stdcall;
 
-    function Replace(const Input        : string;
-                           Evaluator    : TRegexMatchEvaluator): string; overload; stdcall;
+//    function Replace(const Input        : string;
+//                           Evaluator    : TRegexMatchEvaluator): string; overload; stdcall;
 
     function Replace(const Input        : string;
                      const Replacement  : string;
@@ -634,7 +636,7 @@ type
     function Split(const Input: string; Options: TRegSplitOptions; MatchOptions: TRegMatchOptions): IStringCollection; overload; stdcall;
 
     function Replace(const Input: string; const Replacement: string): string; overload; stdcall;
-    function Replace(const Input: string; Evaluator: TRegexMatchEvaluator): string; overload; stdcall;
+//    function Replace(const Input: string; Evaluator: TRegexMatchEvaluator): string; overload; stdcall;
     function Replace(const Input: string; const Replacement: string; MatchOptions: TRegMatchOptions): string; overload; stdcall;
     function Replace(const Input: string; Evaluator: TRegexMatchEvaluator; MatchOptions: TRegMatchOptions): string; overload; stdcall;
 
@@ -1711,13 +1713,13 @@ begin
 end;
 
 //===========================================================================
-
+{
 function TRegex.Replace(const Input: string; Evaluator: TRegexMatchEvaluator): string;
 
 begin
   Result := Replace(Input, Evaluator, []);
 end;
-
+}
 //===========================================================================
 
 function TRegex.Replace(const Input, Replacement  : string;
