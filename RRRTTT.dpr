@@ -46,7 +46,8 @@ uses
   PCRE in 'PCRE\PCRE.pas',
   pcre_dll in 'PCRE\pcre_dll.pas',
   ConfigHandlerRuntime in 'ConfigHandlerRuntime.pas',
-  UDebug in 'UDebug.pas' {DebugForm};
+  UDebug in 'UDebug.pas' {DebugForm},
+  UTrayManager in 'UTrayManager.pas' {TrayManager};
 
 {$R *.res}
 
@@ -65,5 +66,6 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TConfigDialog, ConfigDialog);
   Application.CreateForm(TDebugForm, DebugForm);
+  Application.CreateForm(TTrayManager, TrayManager);
   Application.Run;
 end.

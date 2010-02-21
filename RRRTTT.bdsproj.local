@@ -34,5 +34,7 @@
     <Transaction>2009/02/09 21:01:33.765.pas,Y:\zrun\RRRTTT\0.4\Unit1.pas=Y:\zrun\RRRTTT\0.4\ConfigHandlerRuntime.pas</Transaction>
     <Transaction>2010/02/12 21:57:40.660.pas,Y:\Projects\RRRTTT\trunk\Unit1.pas=Y:\Projects\RRRTTT\trunk\UDebug.pas</Transaction>
     <Transaction>2010/02/12 21:57:40.660.dfm,Y:\Projects\RRRTTT\trunk\Unit1.dfm=Y:\Projects\RRRTTT\trunk\UDebug.dfm</Transaction>
+    <Transaction>2010/02/21 18:17:35.203.pas,Y:\Projects\RRRTTT\trunk\Unit1.pas=Y:\Projects\RRRTTT\trunk\UTrayManager.pas</Transaction>
+    <Transaction>2010/02/21 18:17:35.203.dfm,Y:\Projects\RRRTTT\trunk\Unit1.dfm=Y:\Projects\RRRTTT\trunk\UTrayManager.dfm</Transaction>
   </Transactions>
 </BorlandProject>

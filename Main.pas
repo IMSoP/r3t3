@@ -3,7 +3,7 @@ unit Main;
 interface
 
 uses
-  _TaskFrame, _ClickToEditFrame, _EditableTimeFrame, UDebug,
+  _TaskFrame, _ClickToEditFrame, _EditableTimeFrame, UDebug, UTrayManager,
   ConfigManager, ConfigState, ConfigHandlerINIFile, ConfigHandlerRuntime, UConfigDialog,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -24,12 +24,8 @@ type
     FooterPanel: TPanel;
     HeaderPanel: TPanel;
     SettingsButton: TSpeedButton;
-    TheTrayIcon: TTrayIcon;
-    TrayIconImageList: TImageList;
     procedure SettingsButtonClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure InitialiseTrayIconImages();
-    procedure TheTrayIconClick(Sender: TObject);
 
   private
     FConfigManager: TConfigManager;
@@ -100,8 +96,6 @@ begin
          Self.AddTask();
          Self.Pause;
 
-         InitialiseTrayIconImages;
-
          // Can't set this at design time (or don't know how)
          TotalTime.ReadOnly := True;
 
@@ -110,25 +104,6 @@ begin
          TConfigHandlerINIFile.Create(FConfigManager);
          // Horribly inconsistently, this one takes the *form* in the constructor
          FConfigManager.AttachObserver(TConfigHandlerRuntime.Create(Self));
-end;
-
-procedure TMainForm.InitialiseTrayIconImages();
-var
-      NewIcon: TIcon;
-      i: Integer;
-begin
-      NewIcon := TIcon.Create;
-      NewIcon.LoadFromResourceName(hInstance, 'Foo');
-      TheTrayIcon.IconIndex := TrayIconImageList.AddIcon(NewIcon);
-      NewIcon.Free;
-
-      For i := 0 To 9
-      Do Begin
-            NewIcon := TIcon.Create;
-            NewIcon.LoadFromResourceName(hInstance, 'Foo'+IntToStr(i));
-            TrayIconImageList.AddIcon(NewIcon);
-            NewIcon.Free;
-      End;
 end;
 
 procedure TMainForm.RegisterHotKeys();
@@ -236,7 +211,6 @@ begin
                               end;
                         Ord('0')..Ord('9'):
                               begin
-                                    TheTrayIcon.IconIndex := Msg.CharCode - Ord('0');
                                     // Activate the task for that number, if it exists
                                     PerformTaskAction(Msg.CharCode - Ord('0'), ShiftState);
                                     Handled := true;
@@ -407,12 +381,6 @@ begin
 end;
 
 
-
-procedure TMainForm.TheTrayIconClick(Sender: TObject);
-begin
-         Self.toggleVisible();
-end;
-
 procedure TMainForm.TickTimerTimer(Sender: TObject);
 var
    TimeText: TEditableTime;
@@ -453,12 +421,15 @@ begin
       if TaskNum = -1 then
       begin
             Pause;
+            TrayManager.NotifyPaused;
       end
       else
       begin
             _taskFrames[TaskNum].TaskPanel.Color := clMoneyGreen;
             _taskFrames[TaskNum].StartBtn.Visible := False;
             _taskFrames[TaskNum].StopBtn.Visible := True;
+
+            TrayManager.NotifyRunning( TaskNum );
       end;
 
       _currentTask := TaskNum;
