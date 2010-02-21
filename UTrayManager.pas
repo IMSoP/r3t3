@@ -59,6 +59,16 @@ var
       NewIcon: TIcon;
       i: Integer;
 begin
+      FIconBase := TIcon.Create;
+      FIconBase.LoadFromResourceName(hInstance, 'IconBase16');
+
+      FIconPaused := TIcon.Create;
+      FIconPaused.LoadFromResourceName(hInstance, 'IconPaused');
+
+      FIconRunning := TIcon.Create;
+      FIconRunning.LoadFromResourceName(hInstance, 'IconRunning');
+
+      {
       NewIcon := TIcon.Create;
 
       // Load the base icon first, since the IconIndex special-cases 0
@@ -70,7 +80,7 @@ begin
 
       NewIcon.LoadFromResourceName(hInstance, 'IconPaused');
       FIconIdxPaused := TrayIconImageList.AddIcon(NewIcon);
-
+      }
       {
       For i := 0 To 9
       Do Begin
@@ -81,17 +91,17 @@ begin
       End;
       }
 
-      NewIcon.Free;
+      // NewIcon.Free;
 end;
 
 procedure TTrayManager.NotifyPaused;
 begin
-      TheTrayIcon.IconIndex := FIconIdxPaused;
+      TheTrayIcon.Icon := FIconPaused;
 end;
 
 procedure TTrayManager.NotifyRunning(TaskNum: Integer);
 begin
-      TheTrayIcon.IconIndex := FIconIdxRunning;
+      TheTrayIcon.Icon := FIconRunning;
 end;
 
 procedure TTrayManager.ShowHideTaskList1Click(Sender: TObject);
@@ -101,7 +111,7 @@ end;
 
 procedure TTrayManager.TheTrayIconClick(Sender: TObject);
 begin
-         MainForm.toggleVisible();
+      MainForm.toggleVisible();
 end;
 
 end.

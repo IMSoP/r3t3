@@ -1,6 +1,6 @@
 Go Bitmap "Go.bmp"
 PlusGo Bitmap "PlusGo.bmp"
-MainIcon Icon "graphics\main.ico"
-IconBase2 Icon "graphics\main-16.ico"
+IconBase Icon "graphics\main.ico"
+IconBase16 Icon "graphics\main-16.ico"
 IconRunning Icon "graphics\running-16.ico"
 IconPaused Icon "graphics\paused-16.ico"
