@@ -22,6 +22,10 @@ type
     FIconIdxBase: Integer;
     FIconIdxRunning: Integer;
     FIconIdxPaused: Integer;
+
+    FIconBase: TIcon;
+    FIconRunning: TIcon;
+    FIconPaused: TIcon;
   public
     { Public declarations }
     procedure InitialiseTrayIconImages;

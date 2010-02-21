@@ -15,6 +15,7 @@ object TrayManager: TTrayManager
   PixelsPerInch = 96
   TextHeight = 13
   object TrayIconImageList: TImageList
+    Masked = False
     Left = 40
     Top = 8
   end
@@ -57,7 +58,6 @@ object TrayManager: TTrayManager
       00E6FFCC00BCFFCC008EFFCC0017FFFFFF00FFFFFF00FFFFFF00FFFFFF00FD9F
       0000E3EF0000CFF300009FF900009FF900008980000079BE0000787E0000783E
       0000799E0000F81F0000F87F0000FFFF0000CE730000F24F0000FC1F0000}
-    Icons = TrayIconImageList
     PopupMenu = TrayPopupMenu
     Visible = True
     OnDblClick = TheTrayIconClick
