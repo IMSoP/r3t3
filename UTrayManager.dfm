@@ -58,9 +58,23 @@ object TrayManager: TTrayManager
       0000E3EF0000CFF300009FF900009FF900008980000079BE0000787E0000783E
       0000799E0000F81F0000F87F0000FFFF0000CE730000F24F0000FC1F0000}
     Icons = TrayIconImageList
+    PopupMenu = TrayPopupMenu
     Visible = True
     OnDblClick = TheTrayIconClick
     Left = 8
     Top = 8
+  end
+  object TrayPopupMenu: TPopupMenu
+    Left = 72
+    Top = 8
+    object ShowHideTaskList1: TMenuItem
+      Caption = 'Show / Hide Task List'
+      Default = True
+      OnClick = ShowHideTaskList1Click
+    end
+    object ExitR3T31: TMenuItem
+      Caption = 'Exit R3T3 ...'
+      OnClick = ExitR3T31Click
+    end
   end
 end

@@ -4,14 +4,19 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ImgList;
+  Dialogs, ExtCtrls, ImgList, Menus;
 
 type
   TTrayManager = class(TForm)
     TrayIconImageList: TImageList;
     TheTrayIcon: TTrayIcon;
+    TrayPopupMenu: TPopupMenu;
+    ShowHideTaskList1: TMenuItem;
+    ExitR3T31: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure TheTrayIconClick(Sender: TObject);
+    procedure ExitR3T31Click(Sender: TObject);
+    procedure ShowHideTaskList1Click(Sender: TObject);
   private
     { Private declarations }
     FIconIdxBase: Integer;
@@ -32,6 +37,11 @@ implementation
 {$R *.dfm}
 
 uses Main, UDebug;
+
+procedure TTrayManager.ExitR3T31Click(Sender: TObject);
+begin
+      MainForm.Close;
+end;
 
 procedure TTrayManager.FormCreate(Sender: TObject);
 begin
@@ -78,6 +88,11 @@ end;
 procedure TTrayManager.NotifyRunning(TaskNum: Integer);
 begin
       TheTrayIcon.IconIndex := FIconIdxRunning;
+end;
+
+procedure TTrayManager.ShowHideTaskList1Click(Sender: TObject);
+begin
+      MainForm.ToggleVisible;
 end;
 
 procedure TTrayManager.TheTrayIconClick(Sender: TObject);
