@@ -4,11 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ImgList, Menus;
+  Dialogs, ExtCtrls, Menus;
 
 type
   TTrayManager = class(TForm)
-    TrayIconImageList: TImageList;
     TheTrayIcon: TTrayIcon;
     TrayPopupMenu: TPopupMenu;
     ShowHideTaskList1: TMenuItem;
@@ -19,10 +18,6 @@ type
     procedure ShowHideTaskList1Click(Sender: TObject);
   private
     { Private declarations }
-    FIconIdxBase: Integer;
-    FIconIdxRunning: Integer;
-    FIconIdxPaused: Integer;
-
     FIconBase: TIcon;
     FIconRunning: TIcon;
     FIconPaused: TIcon;
@@ -54,10 +49,7 @@ begin
       // Self.NotifyPaused;
 end;
 
-procedure TTrayManager.InitialiseTrayIconImages();
-var
-      NewIcon: TIcon;
-      i: Integer;
+procedure TTrayManager.InitialiseTrayIconImages;
 begin
       FIconBase := TIcon.Create;
       FIconBase.LoadFromResourceName(hInstance, 'IconBase16');
@@ -67,31 +59,6 @@ begin
 
       FIconRunning := TIcon.Create;
       FIconRunning.LoadFromResourceName(hInstance, 'IconRunning');
-
-      {
-      NewIcon := TIcon.Create;
-
-      // Load the base icon first, since the IconIndex special-cases 0
-      NewIcon.LoadFromResourceName(hInstance, 'IconBase');
-      FIconIdxBase := TrayIconImageList.AddIcon(NewIcon);
-
-      NewIcon.LoadFromResourceName(hInstance, 'IconRunning');
-      FIconIdxRunning := TrayIconImageList.AddIcon(NewIcon);
-
-      NewIcon.LoadFromResourceName(hInstance, 'IconPaused');
-      FIconIdxPaused := TrayIconImageList.AddIcon(NewIcon);
-      }
-      {
-      For i := 0 To 9
-      Do Begin
-            NewIcon := TIcon.Create;
-            NewIcon.LoadFromResourceName(hInstance, 'Foo'+IntToStr(i));
-            TrayIconImageList.AddIcon(NewIcon);
-            NewIcon.Free;
-      End;
-      }
-
-      // NewIcon.Free;
 end;
 
 procedure TTrayManager.NotifyPaused;

@@ -14,11 +14,6 @@ object TrayManager: TTrayManager
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object TrayIconImageList: TImageList
-    Masked = False
-    Left = 40
-    Top = 8
-  end
   object TheTrayIcon: TTrayIcon
     Hint = 'R3T3'
     Icon.Data = {
