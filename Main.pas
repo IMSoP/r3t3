@@ -144,13 +144,15 @@ procedure TMainForm.FormShortCut(var Msg: TWMKey; var Handled: Boolean);
             If ssAlt in ShiftState
             Then Begin
                   // Alt-task to edit text
-                  If ( _numTasks > TaskNum )
+                  If ( (_numTasks > TaskNum) And (TaskNum > -1) )
                         Then _taskFrames[TaskNum].TaskName.BeginEditting;
             End
             Else If ssShift in ShiftState
             Then Begin
                   // Shift-task to edit time
-                  If ( _numTasks > TaskNum )
+                  If ( TaskNum = -1 )
+                        Then TasklessTime.BeginEditting
+                  Else If ( _numTasks > TaskNum )
                         Then _taskFrames[TaskNum].TaskTime.BeginEditting;
             End
             Else Begin
@@ -225,6 +227,12 @@ begin
                               begin
                                     // This key happens to be to the left of '1', so treat it as '0'
                                     PerformTaskAction(0, ShiftState);
+                                    Handled := true;
+                              end;
+                        VK_OEM_PERIOD, VK_DECIMAL:
+                              begin
+                                    // This key happens to be to the left of '1', so treat it as '0'
+                                    PerformTaskAction(_currentTask, ShiftState);
                                     Handled := true;
                               end;
                         VK_OEM_PLUS, VK_ADD:
