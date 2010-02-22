@@ -188,6 +188,16 @@ begin
                                           Handled := true;
                                     End;
                               end;
+                        Ord('O'):
+                              begin
+                                    // Ctrl-O for Open...; currently simulating button-press :-/
+                                    LoadButtonClick(nil);
+                              end;
+                        Ord('S'):
+                              begin
+                                    // Ctrl-S for Save...; currently simulating button-press :-/
+                                    SaveButtonClick(nil);
+                              end;
                   end;
             End Else Begin
                   case Msg.CharCode of
