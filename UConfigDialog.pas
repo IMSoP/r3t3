@@ -14,7 +14,6 @@ type
     CancelBtn: TButton;
     AutoSaveGroup: TGroupBox;
     ASDirectoryDialog: TSaveDialog;
-    ASDirectoryBrowseButton: TSpeedButton;
     ASFileMaskEdit: TEdit;
     ASDirectoryEdit: TEdit;
     ASFileMaskLabel: TLabel;
@@ -24,6 +23,7 @@ type
     ASHelpText: TLabel;
     TrayIconGroup: TGroupBox;
     TrayIconEnabledCheck: TCheckBox;
+    ASDirectoryBrowseButton: TButton;
     procedure ASDirectoryBrowseButtonClick(Sender: TObject);
     procedure ASFileMaskEditChange(Sender: TObject);
     procedure ASDirectoryEditChange(Sender: TObject);

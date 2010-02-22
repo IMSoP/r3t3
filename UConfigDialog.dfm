@@ -24,7 +24,7 @@ object ConfigDialog: TConfigDialog
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 0
+    TabOrder = 2
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
@@ -36,7 +36,7 @@ object ConfigDialog: TConfigDialog
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 1
+    TabOrder = 3
     OnClick = CancelBtnClick
   end
   object AutoSaveGroup: TGroupBox
@@ -46,21 +46,10 @@ object ConfigDialog: TConfigDialog
     Height = 146
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Auto-Save'
-    TabOrder = 2
+    TabOrder = 0
     DesignSize = (
       357
       146)
-    object ASDirectoryBrowseButton: TSpeedButton
-      Left = 286
-      Top = 65
-      Width = 63
-      Height = 22
-      Anchors = [akTop, akRight]
-      Caption = 'Browse...'
-      Enabled = False
-      OnClick = ASDirectoryBrowseButtonClick
-      ExplicitLeft = 290
-    end
     object ASFileMaskLabel: TLabel
       Left = 7
       Top = 68
@@ -89,7 +78,7 @@ object ConfigDialog: TConfigDialog
     end
     object ASHelpText: TLabel
       Left = 7
-      Top = 111
+      Top = 114
       Width = 339
       Height = 26
       Anchors = [akLeft, akTop, akRight]
@@ -105,14 +94,14 @@ object ConfigDialog: TConfigDialog
       Width = 121
       Height = 21
       Enabled = False
-      TabOrder = 0
+      TabOrder = 2
       Text = 'ASFileMaskEdit'
       OnChange = ASFileMaskEditChange
     end
     object ASDirectoryEdit: TEdit
       Left = 57
       Top = 38
-      Width = 292
+      Width = 288
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Enabled = False
@@ -127,8 +116,19 @@ object ConfigDialog: TConfigDialog
       Height = 17
       Anchors = [akLeft, akTop, akRight]
       Caption = 'Start saving automatically when R3T3 launches'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = ASEnabledCheckClick
+    end
+    object ASDirectoryBrowseButton: TButton
+      Left = 271
+      Top = 65
+      Width = 75
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'Browse...'
+      Enabled = False
+      TabOrder = 3
+      OnClick = ASDirectoryBrowseButtonClick
     end
   end
   object TrayIconGroup: TGroupBox
@@ -138,7 +138,7 @@ object ConfigDialog: TConfigDialog
     Height = 49
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Tray Icon'
-    TabOrder = 3
+    TabOrder = 1
     DesignSize = (
       357
       49)

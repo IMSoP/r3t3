@@ -190,8 +190,13 @@ begin
                               end;
                         Ord('O'):
                               begin
-                                    // Ctrl-O for Open...; currently simulating button-press :-/
-                                    LoadButtonClick(nil);
+                                    If ssShift in ShiftState
+                                    Then
+                                          // Ctrl-Shift-O for Options...
+                                          ConfigDialog.ShowModal
+                                    Else
+                                          // Ctrl-O for Open...; currently simulating button-press :-/
+                                          LoadButtonClick(nil);
                               end;
                         Ord('S'):
                               begin
