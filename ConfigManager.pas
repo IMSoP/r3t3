@@ -37,6 +37,9 @@ type
             property CurrentState: TConfigState read FCurrentState write SetState;
       end;
 
+var
+      TheConfigManager: TConfigManager;
+
 implementation
 
       constructor TConfigManager.Create;

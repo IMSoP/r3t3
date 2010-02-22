@@ -26,6 +26,7 @@ type
     procedure InitialiseTrayIconImages;
     procedure NotifyPaused;
     procedure NotifyRunning(TaskNum: Integer);
+    procedure ToggleIcon(BeVisible: Boolean);
   end;
 
 var
@@ -79,6 +80,11 @@ end;
 procedure TTrayManager.TheTrayIconClick(Sender: TObject);
 begin
       MainForm.toggleVisible();
+end;
+
+procedure TTrayManager.ToggleIcon(BeVisible: Boolean);
+begin
+      TheTrayIcon.Visible := BeVisible;
 end;
 
 end.

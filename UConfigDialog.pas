@@ -22,6 +22,8 @@ type
     ASCurrentFileDisplay: TLabel;
     ASEnabledCheck: TCheckBox;
     ASHelpText: TLabel;
+    TrayIconGroup: TGroupBox;
+    TrayIconEnabledCheck: TCheckBox;
     procedure ASDirectoryBrowseButtonClick(Sender: TObject);
     procedure ASFileMaskEditChange(Sender: TObject);
     procedure ASDirectoryEditChange(Sender: TObject);
@@ -39,7 +41,6 @@ type
   public
       procedure IConfigObserver.Update = ConfigUpdate;
       procedure ConfigUpdate(Subject: TConfigManager);
-      procedure ShowModal(const ConfigManager: TConfigManager); reintroduce; overload;
   end;
 
 var
@@ -48,6 +49,17 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TConfigDialog.ConfigUpdate(Subject: TConfigManager);
+begin
+      If FConfigManager = Nil
+      Then Begin
+            FConfigManager := Subject;
+            FConfigManager.AttachObserver(Self);
+      End;
+
+      LoadDialogFromState(Subject.CurrentState);
+end;
 
 procedure TConfigDialog.ASDirectoryBrowseButtonClick(Sender: TObject);
 begin
@@ -82,21 +94,16 @@ begin
       UpdateASFileMaskDisplay;
 end;
 
-procedure TConfigDialog.CancelBtnClick(Sender: TObject);
+procedure TConfigDialog.UpdateASFileMaskDisplay;
 begin
-      // Reset dialog to currently active config state
-      LoadDialogFromState( FConfigManager.CurrentState );
-end;
+      ASFileMaskEdit.Text := FASFileMask;
+      ASDirectoryEdit.Text := FASDirectoryName;
 
-procedure TConfigDialog.ShowModal(const ConfigManager: TConfigManager);
-begin
-      If FConfigManager = Nil
-      Then Begin
-            FConfigManager := ConfigManager;
-            FConfigManager.AttachObserver(Self);
-      End;
-      
-      inherited ShowModal;
+      ASCurrentFileDisplay.Caption :=
+            'Current Filename: '
+            + TConfigManager.ApplyDateMask(FASDirectoryName + '\' + FASFileMask);
+
+      ASCurrentFileDisplay.Visible := True;
 end;
 
 procedure TConfigDialog.LoadDialogFromState(const NewState: TConfigState);
@@ -112,6 +119,9 @@ begin
       FASFileMask := NewState['Autosave', 'Filemask'];
 
       UpdateASFileMaskDisplay;
+
+      // Tray Icon enabled?
+      TrayIconEnabledCheck.Checked := NewState.BooleanValues['TrayIcon', 'Enabled'];
 end;
 
 procedure TConfigDialog.SaveDialogToState;
@@ -124,6 +134,8 @@ begin
       NewState['Autosave', 'Directory'] := FASDirectoryName;
       NewState['Autosave', 'Filemask'] := FASFileMask;
 
+      NewState.BooleanValues['TrayIcon', 'Enabled'] := TrayIconEnabledCheck.Checked;
+
       FConfigManager.CurrentState := NewState;
 
       NewState.Free;
@@ -134,21 +146,10 @@ begin
       SaveDialogToState;
 end;
 
-procedure TConfigDialog.ConfigUpdate(Subject: TConfigManager);
+procedure TConfigDialog.CancelBtnClick(Sender: TObject);
 begin
-      LoadDialogFromState(Subject.CurrentState);
-end;
-
-procedure TConfigDialog.UpdateASFileMaskDisplay;
-begin
-      ASFileMaskEdit.Text := FASFileMask;
-      ASDirectoryEdit.Text := FASDirectoryName;
-
-      ASCurrentFileDisplay.Caption :=
-            'Current Filename: '
-            + TConfigManager.ApplyDateMask(FASDirectoryName + '\' + FASFileMask);
-
-      ASCurrentFileDisplay.Visible := True;
+      // Reset dialog to currently active config state
+      LoadDialogFromState( FConfigManager.CurrentState );
 end;
 
 end.

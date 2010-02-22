@@ -28,7 +28,6 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 
   private
-    FConfigManager: TConfigManager;
     _hidden: boolean;
     _taskFrames: Array of TTaskFrame;
     _numTasks: integer;
@@ -98,12 +97,6 @@ begin
 
          // Can't set this at design time (or don't know how)
          TotalTime.ReadOnly := True;
-
-         FConfigManager := TConfigManager.Create;
-         // Takes the TConfigManager in constructor, and subscribes to it
-         TConfigHandlerINIFile.Create(FConfigManager);
-         // Horribly inconsistently, this one takes the *form* in the constructor
-         FConfigManager.AttachObserver(TConfigHandlerRuntime.Create(Self));
 end;
 
 procedure TMainForm.RegisterHotKeys();
@@ -478,8 +471,7 @@ end;
 
 procedure TMainForm.SettingsButtonClick(Sender: TObject);
 begin
-      // Give auto-created ConfigDialog a reference to the ConfigManager
-      ConfigDialog.ShowModal(FConfigManager);
+      ConfigDialog.ShowModal;
 end;
 
 procedure TMainForm.SaveButtonClick(Sender: TObject);

@@ -34,7 +34,6 @@ begin
       FConfigManager := ConfigManager;
       FINIFileName := ExtractFileDir(Application.ExeName) + '\' + R3T3_INI_FILE_NAME;
       LoadFileContents;
-      FConfigManager.AttachObserver(Self);
 end;
 
 procedure TConfigHandlerINIFile.LoadFileContents;

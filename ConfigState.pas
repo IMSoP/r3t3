@@ -52,6 +52,9 @@ implementation
             BooleanValues['Autosave', 'Enabled'] := False;
             StringValues['Autosave', 'Directory'] := ExtractFileDir(Application.ExeName) + '\';
             StringValues['Autosave', 'Filemask'] := '{yyyy-mm-dd}.txt';
+
+            // Tray Icon is enabled by default
+            BooleanValues['TrayIcon', 'Enabled'] := True;
       end;
 
       constructor TConfigState.Clone(const Source: TConfigState);

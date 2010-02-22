@@ -3,21 +3,21 @@ object ConfigDialog: TConfigDialog
   Top = 173
   BorderStyle = bsDialog
   Caption = 'Settings'
-  ClientHeight = 183
-  ClientWidth = 367
+  ClientHeight = 231
+  ClientWidth = 361
   Color = clBtnFace
   ParentFont = True
   OldCreateOrder = True
   PopupMode = pmAuto
   Position = poMainFormCenter
   DesignSize = (
-    367
-    183)
+    361
+    231)
   PixelsPerInch = 96
   TextHeight = 13
   object OKBtn: TButton
-    Left = 288
-    Top = 152
+    Left = 282
+    Top = 200
     Width = 75
     Height = 26
     Anchors = [akRight, akBottom]
@@ -28,8 +28,8 @@ object ConfigDialog: TConfigDialog
     OnClick = OKBtnClick
   end
   object CancelBtn: TButton
-    Left = 207
-    Top = 152
+    Left = 201
+    Top = 200
     Width = 75
     Height = 26
     Anchors = [akRight, akBottom]
@@ -42,19 +42,24 @@ object ConfigDialog: TConfigDialog
   object AutoSaveGroup: TGroupBox
     Left = 1
     Top = 1
-    Width = 363
+    Width = 357
     Height = 146
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Auto-Save'
     TabOrder = 2
+    DesignSize = (
+      357
+      146)
     object ASDirectoryBrowseButton: TSpeedButton
-      Left = 290
+      Left = 286
       Top = 65
       Width = 63
       Height = 22
+      Anchors = [akTop, akRight]
       Caption = 'Browse...'
       Enabled = False
       OnClick = ASDirectoryBrowseButtonClick
+      ExplicitLeft = 290
     end
     object ASFileMaskLabel: TLabel
       Left = 7
@@ -87,6 +92,7 @@ object ConfigDialog: TConfigDialog
       Top = 111
       Width = 339
       Height = 26
+      Anchors = [akLeft, akTop, akRight]
       Caption = 
         'Text in braces {} will be substituted for the current date using' +
         ' Delphi'#39's DateTimeToString routine - e.g. "Hours {yyyy-mm-dd}.tx' +
@@ -106,8 +112,9 @@ object ConfigDialog: TConfigDialog
     object ASDirectoryEdit: TEdit
       Left = 57
       Top = 38
-      Width = 296
+      Width = 292
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       Enabled = False
       TabOrder = 1
       Text = 'ASDirectoryEdit'
@@ -116,11 +123,33 @@ object ConfigDialog: TConfigDialog
     object ASEnabledCheck: TCheckBox
       Left = 7
       Top = 18
-      Width = 346
+      Width = 340
       Height = 17
+      Anchors = [akLeft, akTop, akRight]
       Caption = 'Start saving automatically when R3T3 launches'
       TabOrder = 2
       OnClick = ASEnabledCheckClick
+    end
+  end
+  object TrayIconGroup: TGroupBox
+    Left = 1
+    Top = 147
+    Width = 357
+    Height = 49
+    Anchors = [akLeft, akTop, akRight]
+    Caption = 'Tray Icon'
+    TabOrder = 3
+    DesignSize = (
+      357
+      49)
+    object TrayIconEnabledCheck: TCheckBox
+      Left = 7
+      Top = 18
+      Width = 340
+      Height = 17
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'Show icon in Notification Area ("System Tray")'
+      TabOrder = 0
     end
   end
   object ASDirectoryDialog: TSaveDialog
