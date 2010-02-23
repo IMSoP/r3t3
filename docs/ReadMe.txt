@@ -22,11 +22,11 @@ The latest version, including source, can be found at http://rwec.co.uk/r3t3
 
 It should be fairly obvious how to use it, but the absolutely key things to know before you use it are:
 
-[1] Flag + \ [Holding the Windows Flag key and pressing backslash] hides and shows the main window. When hidden, there's no entry in the taskbar or system tray, it's truly invisible.
+[1] Flag + \ [Holding the Windows Flag key and pressing backslash] hides and shows the main window. When hidden, there's no entry in the taskbar, and even the tray icon is optional; it's truly invisible. If the tray icon is enabled, double-clicking it will show/hide the main window.
 
 [2] Whenever no task is selected (including when you first run it) an extra red "Paused" timer appears at the bottom of the window; next time you activate a task, this time will be *added to that task*. The idea is you can quickly pause the timer when someone/something interrupts you, and work out where the time belongs later.
 
-[3] All the descriptions, and all the timers (including the Paused timer, but not including the Total) can be editted by clicking on them; click the tick or press enter/return to confirm the change (clicking the cross, pressing escape, or clicking out of the box cancels).
+[3] All the descriptions, and all the timers (including the Paused timer, but not including the Total) can be edited by clicking on them; click the tick or press enter/return to confirm the change (clicking the cross or pressing escape cancels, but simply clicking outside the box will confirm).
 
 [4] To set up automatic saving, click "Options", and set a directory and file mask; whenever you start the program, it will create a filename based on today's date, and save to it every minute. If "today's" file already exists, it will be automatically loaded, so if you have to exit the program, it will pick up where it left off. The result is just a text file with tab-separated fields, so you can open it with notepad or whatever.
 
@@ -37,6 +37,8 @@ It should be fairly obvious how to use it, but the absolutely key things to know
 As well as the full auto-save described above, you can also use the Save button to manually specify a location to save to and the system will save its state to that file once a minute. Similarly, the Load button will read in an existing file, and then use that file as the location to save to.
 
 If you want to stop the timers being saved once a minute, untick the Auto-Save box on the main screen.
+
+If auto-save is enabled, the program will also attempt to save on exit. If it is not enabled, you will be warned that data could be lost.
 
 ************************
 ** Keyboard Shortcuts **
@@ -54,11 +56,21 @@ Flag + \	Show/hide main window
 Shift + \	Pause, and edit paused time
 + or =		Add a new task
 Alt + (+ or =)	Add a new task, and edit its description
+
 0 to 9		Activate task with that number
 Alt + 0 to 9	Edit the description for that task
 Shift + 0 to 9	Edit the time for that task
 `		The button to the left of 1 acts as an extra 0, including with Shift and Alt, because it felt natural
 Numpad		The numpad works for plain 0-9, and Alt + 0-9; using Shift over-rides numlock, so the app just sees "Insert", "Page Up", etc
+A to Z		For tasks 10 (A) through 35 (Z), you can use the letters shown in the interface
+Alt + A to Z	Edit descriptions for tasks 10 to 35
+Shift + A to Z	Edit time for tasks 10 to 35
+Alt + .		Edit description of currently selected task; the . on the numpad also works
+Shift + .	Edit time of currently selected task, or paused time if no task selected (numpad . cannot be used due to issue mentionned above)
+
+Ctl + O		Show the Open... dialogue
+Ctl + S		Show the Save... dialogue
+Ctl + Shift + O	Show the Options / Settings screen
 
 
 *******************
@@ -81,11 +93,11 @@ h.xxx		Hours and fractions of hours; if h is missing, 0 is assumed
 ** Licensing and Technical Info **
 **********************************
 
-(C) Copyright Rowan Collins, 2009 <mailto:r3t3@rwec.co.uk>
+(C) Copyright Rowan Collins, 2010 <mailto:r3t3@rwec.co.uk>
 
-Licensed under the Creative Commons CC-BY-NC or whatever it's called.
+Licensed under the Creative Commons Attribution-Noncommercial-Share Alike License: see http://creativecommons.org/licenses/by-nc-sa/3.0/
 Basically, use it, share it, modify it, but credit me and don't sell it.
 And, preferably, let me know what you think of it, and what you're doing with it...
 
-To compile the source code you will need a copy of Turbo Delphi Explorer (the free version of Delphi 2006), which is available from  http://www.turboexplorer.com/downloads
-I haven't used any custom libraries or anything that's not included in the source code, so you should be able to open the .bdsproj file and build straight away.
+To compile the source code you will need a copy of Delphi; unfortunately, Embarcadero (who now only Delphi) are no longer offering downloads of the free "Turbo Delphi Explorer" which I have been using, which is effectively a slightly restricted version of Delphi 2006.
+I haven't used any custom libraries or anything that's not included in the source code, so if you do have an appropriate copy of Delphi, you should be able to open the .bdsproj file and build straight away.
